@@ -1,0 +1,245 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="nav nav-pills nav-fill" id="variants" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="format-tab" data-toggle="tab" href="#format" role="tab" aria-controls="format" aria-selected="true">Format</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="size-tab" data-toggle="tab" href="#size" role="tab" aria-controls="size" aria-selected="false">Size</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="frame-tab" data-toggle="tab" href="#frame" role="tab" aria-controls="frame" aria-selected="false">Frame</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="border-tab" data-toggle="tab" href="#border" role="tab" aria-controls="border" aria-selected="false">Border</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="format" role="tabpanel" aria-labelledby="format-tab">
+                        <legend>Choose your format...</legend>
+                        
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aspect" id="aspect-landscape" value="landscape">
+                                <label class="form-check-label" for="aspect-landscape">Landscape</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aspect" id="aspect-portrait" value="portrait">
+                                <label class="form-check-label" for="aspect-portrait">Portrait</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aspect" id="aspect-square" value="square">
+                                <label class="form-check-label" for="aspect-square">Square</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary next-link upload-button" onclick="uploadImage()" id="upload">Upload Image</button>
+                        </div>
+                        <p>Framing does not get much easier than this. Follow these 4 easy steps and we will have the finished work back to you in two weeks.</p>
+                    </div>
+                    <div class="tab-pane" id="size" role="tabpanel" aria-labelledby="size-tab">
+                        <legend>Choose your size...</legend>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="dimensions" id="dimensions-landscape" value="30x30cm">
+                                <label class="form-check-label" for="dimensions-30x30cm">30x30cm</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="dimensions" id="dimensions-portrait" value="60x60cm">
+                                <label class="form-check-label" for="dimensions-60x60cm">60x60cm</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="dimensions" id="dimensions-square" value="90x90cm">
+                                <label class="form-check-label" for="dimensions-90x90cm">90x90cm</label>
+                            </div>
+                        </div>
+                        <p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>
+
+                        <p>Contact us for custom sizes.</p>
+                    </div>
+                    <div class="tab-pane" id="frame" role="tabpanel" aria-labelledby="frame-tab">
+                        <legend>Choose your frame...</legend>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="frame" id="frame-natural" value="natural">
+                                <label class="form-check-label" for="frame-natural">Natural</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="frame" id="frame-black" value="black">
+                                <label class="form-check-label" for="frame-black">Black</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="frame" id="frame-white" value="white">
+                                <label class="form-check-label" for="frame-white">White</label>
+                            </div>
+                        </div>
+                        <p>For a sleek, gallery style treatment we use a deep shadow box frame profile. Artwork is set back from the acrylic glazing, appearing to float in the frame.</p>
+                    </div>
+                    <div class="tab-pane" id="border" role="tabpanel" aria-labelledby="border-tab">
+
+                        <legend>Choose your border...</legend>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="border" id="border-fullImage" value="Full Image">
+                                <label class="form-check-label" for="border-fullImage">Natural</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="border" id="border-whiteBorder" value="White Border">
+                                <label class="form-check-label" for="border-whiteBorder">Black</label>
+                            </div>
+                        </div>
+                        <p>Frame your image right to the edge for a sleek contemporary look or allow some space around the image for a more traditional feel.</p>
+                        <form action="/products" method="post" id="productForm">
+                            <input type="hidden" name="image" value=""/>
+                            <input type="hidden" name="format" value="landscape"/>
+                            <input type="hidden" name="size" value="10x10"/>
+                            <input type="hidden" name="frame" value="normal"/>
+                            <input type="hidden" name="border" value="regular"/>
+                            <input type="submit" name="submit" value="Add to Cart" class="btn btn-success"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="app-image-area">
+                    <img data-src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" class="img-fluid"/>
+                </div>
+               
+            </div>
+        </div>
+        
+        <!-- Content here -->
+    </div>
+</section>
+<script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+    const formatOptions = {
+        landscape: 16 / 9,
+        portrait: 3 / 2,
+        square: 1 / 1
+    };
+
+    var format = 'landscape';
+    var size = null;
+    var frame = null;
+    var border = null;
+
+    var radioValue = $("input[name='aspect']:checked").val();
+
+    $('#upload').prop('disabled', true);
+
+    $(document).ready(function() {
+        $("input[name='aspect']").click(function() {
+            var formatValue = $("input[name='aspect']:checked").val();
+            setFormat(formatValue);
+            $('#upload').prop('disabled', false);
+        });
+
+        $("input[name='dimensions']").click(function() {
+            var sizeValue = $("input[name='dimensions']:checked").val();
+            setSize(sizeValue);
+            $('#variants li:nth-child(3) a').tab('show');
+        });
+
+        $("input[name='frame']").click(function() {
+            var frameValue = $("input[name='frame']:checked").val();
+            setFrame(frameValue);
+            $('#variants li:last-child a').tab('show');
+        });
+
+        $("input[name='border']").click(function() {
+            var borderValue = $("input[name='border']:checked").val();
+            setBorder(borderValue);
+        });
+    });
+
+    function setFormat(formatValue) {
+        format = formatValue;
+    }
+
+    function getFormat() {
+        return format;
+    }
+
+    function setSize(sizeValue) {
+        size = sizeValue;
+    }
+
+    function getSize() {
+        return size;
+    }
+
+    function setFrame(frameValue) {
+        frame = frameValue;
+    }
+
+    function getFrame() {
+        return frame;
+    }
+
+    function setBorder(borderValue) {
+        border = borderValue;
+    }
+
+    function getBorder() {
+        return border;
+    }
+
+    function uploadImage() {
+        const client = filestack.init('AyttY1npLTImAmrYGmYOpz');
+
+        let options = {
+            transformations: {
+                crop: {
+                    aspectRatio: formatOptions[getFormat()],
+                    force: true
+                },
+                circle: false,
+                rotate: false,
+            },
+            accept: [
+                "image/*"
+            ],
+            storeTo: {
+                "container": "devportal-customers-assets",
+                "path": "frame-uploads/",
+                "region": "us-east-1"
+            },
+            uploadInBackground: false,
+            onFileSelected: file => {
+                // If you throw any error in this function it will reject the file selection.
+                // The error message will be displayed to the user as an alert.
+                if (file.size > 1000 * 1000) {
+                    throw new Error('File too big, select something smaller than 1MB');
+                }
+            },
+            onUploadDone: (res) => {
+                var uploadedFile = res.filesUploaded[0];
+                /*
+                below is the response data
+                filename: "xvar.png"
+                handle: "CM3Vx4S2aaZBMnwcjdwg"
+                mimetype: "image/png"
+                originalFile: {name: "xvar.png", type: "image/png", size: 693926}
+                originalPath: "xvar.png"
+                size: 37017
+                source: "local_file_system"
+                status: "Stored"
+                uploadId: "f4be7cvt4K7AYguR"
+                url: "https://cdn.filestackcontent.com/CM3Vx4S2aaZBMnwcjdwg"
+                */
+                $('.app-image-area').empty();
+                $('<img src="' + uploadedFile.url + '" class="img-fluid"/>').appendTo('.app-image-area');
+                $("[name='image']").val(uploadedFile.url);
+
+                $('#variants li:nth-child(2) a').tab('show');
+            },
+        };
+
+        client.picker(options).open();
+    }
+
+</script>
