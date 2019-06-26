@@ -1,7 +1,7 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <ul class="nav nav-pills nav-fill" id="variants" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="format-tab" data-toggle="tab" href="#format" role="tab" aria-controls="format" aria-selected="true">Format</a>
@@ -41,23 +41,7 @@
                     </div>
                     <div class="tab-pane" id="size" role="tabpanel" aria-labelledby="size-tab">
                         <legend>Choose your size...</legend>
-                        <div class="form-group">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="dimensions" id="dimensions-landscape" value="30x30cm">
-                                <label class="form-check-label" for="dimensions-30x30cm">30x30cm</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="dimensions" id="dimensions-portrait" value="60x60cm">
-                                <label class="form-check-label" for="dimensions-60x60cm">60x60cm</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="dimensions" id="dimensions-square" value="90x90cm">
-                                <label class="form-check-label" for="dimensions-90x90cm">90x90cm</label>
-                            </div>
-                        </div>
-                        <p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>
-
-                        <p>Contact us for custom sizes.</p>
+                        
                     </div>
                     <div class="tab-pane" id="frame" role="tabpanel" aria-labelledby="frame-tab">
                         <legend>Choose your frame...</legend>
@@ -93,23 +77,24 @@
                         <p>Frame your image right to the edge for a sleek contemporary look or allow some space around the image for a more traditional feel.</p>
                         <form action="/products" method="post" id="productForm">
                             <input type="hidden" name="image" value=""/>
-                            <input type="hidden" name="format" value="landscape"/>
-                            <input type="hidden" name="size" value="10x10"/>
-                            <input type="hidden" name="frame" value="normal"/>
-                            <input type="hidden" name="border" value="regular"/>
-                            <input type="submit" name="submit" value="Add to Cart" class="btn btn-success"/>
+                            <input type="hidden" name="format" value=""/>
+                            <input type="hidden" name="size" value=""/>
+                            <input type="hidden" name="frame" value=""/>
+                            <input type="hidden" name="border" value=""/>
+                            <input type="submit" name="submit" value="Add to Cart" class="btn btn-success" id="add-to-cart"/>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="app-image-area">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="app-image-area text-center">
                     <img data-src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" class="img-fluid"/>
                 </div>
                
             </div>
-        </div>
-        
+        </div> 
         <!-- Content here -->
     </div>
 </section>
@@ -122,14 +107,15 @@
         square: 1 / 1
     };
 
-    var format = 'landscape';
+    var format = null;
     var size = null;
     var frame = null;
     var border = null;
 
-    var radioValue = $("input[name='aspect']:checked").val();
-
     $('#upload').prop('disabled', true);
+    $('#add-to-cart').prop('disabled', true);
+    //checkTab();
+    setFormValue();
 
     $(document).ready(function() {
         $("input[name='aspect']").click(function() {
@@ -137,24 +123,49 @@
             setFormat(formatValue);
             $('#upload').prop('disabled', false);
         });
-
-        $("input[name='dimensions']").click(function() {
+        
+        $(document).on("click", "input[name='dimensions']", function(e) {
             var sizeValue = $("input[name='dimensions']:checked").val();
             setSize(sizeValue);
+            setFormValue();
             $('#variants li:nth-child(3) a').tab('show');
         });
-
+        
         $("input[name='frame']").click(function() {
             var frameValue = $("input[name='frame']:checked").val();
             setFrame(frameValue);
+            setFormValue();
             $('#variants li:last-child a').tab('show');
         });
 
         $("input[name='border']").click(function() {
             var borderValue = $("input[name='border']:checked").val();
             setBorder(borderValue);
+            setFormValue();
+            $('#add-to-cart').prop('disabled', false);
         });
+
+        
     });
+
+    function checkTab() {
+
+        $('.nav-fill .nav-item a').each(function() {
+
+            if ($(this).hasClass('active')) {
+
+                $(this).removeClass('disabled').removeAttr('tabindex aria-disabled');
+
+            } else {
+                
+                $(this).addClass('disabled').attr({
+                    "tabindex":"-1", 
+                    "aria-disabled":"true"
+                });
+            }
+        });
+        
+    }
 
     function setFormat(formatValue) {
         format = formatValue;
@@ -186,6 +197,13 @@
 
     function getBorder() {
         return border;
+    }
+
+    function setFormValue() {
+        $("[name='format']").val(getFormat());
+        $("[name='size']").val(getSize());
+        $("[name='frame']").val(getFrame());
+        $("[name='border']").val(getBorder());
     }
 
     function uploadImage() {
@@ -234,6 +252,71 @@
                 $('.app-image-area').empty();
                 $('<img src="' + uploadedFile.url + '" class="img-fluid"/>').appendTo('.app-image-area');
                 $("[name='image']").val(uploadedFile.url);
+
+                var dimensionTemp = '';
+
+                var selectedFormat = getFormat();
+                switch(selectedFormat) {
+                    case 'landscape':
+                        dimensionTemp = '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x20cm" value="30x20cm">'+
+                                                '<label class="form-check-label" for="dimensions-30x20cm">30x20cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x40cm" value="60x40cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x40cm">60x40cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x60cm" value="90x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-90x60cm">90x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-120x80cm" value="120x80cm">'+
+                                                '<label class="form-check-label" for="dimensions-120x80cm">120x80cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                    break;
+                    case 'portrait':
+                        dimensionTemp = '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-20x30cm" value="20x30cm">'+
+                                                '<label class="form-check-label" for="dimensions-20x30cm">20x30cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-40x60cm" value="40x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-40x60cm">40x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x90cm" value="60x90cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x90cm">60x90cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-80x120cm" value="80x120cm">'+
+                                                '<label class="form-check-label" for="dimensions-80x120cm">80x120cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                    break;
+                    default: //square
+                        dimensionTemp = '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x30cm" value="30x30cm">'+
+                                                '<label class="form-check-label" for="dimensions-30x30cm">30x30cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x60cm" value="60x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x60cm">60x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x90cm" value="90x90cm">'+
+                                                '<label class="form-check-label" for="dimensions-90x90cm">90x90cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                }
+                    dimensionTemp += '<p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>'+
+                                        '<p>Contact us for custom sizes.</p>';
+                $('#size').append(dimensionTemp);
+                setFormValue();
 
                 $('#variants li:nth-child(2) a').tab('show');
             },
