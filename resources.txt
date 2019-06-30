@@ -1,127 +1,38 @@
 landscape
-30x20cm $90 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural.png?6454">
-60x40cm $180 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x400_Natural.png?6454">
-90x60cm $280 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_900x600_Natural.png?6454">
-120x80cm $550 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_1200x800_Natural.png?6454">
-----------
-Natural finish 
-Vic. Ash  timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural_Z.png?6454">
-
-Black painted 
-Vic. Ash timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Black_Z.png?6454">
-
-White painted
-Vic. Ash timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_White_Z.png?6454">
----------
-Full bleed
-300x200mm
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural_Z.png?6454">
-
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x215_Natural_B_Z.png?6454">
-##############
-portraite
-20x30cm $90 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural.png?6454">
-40x60cm $180 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_400x600_Natural.png?6454">
-60x90cm $280 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x900_Natural.png?6454">
-80x120cm $550 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_800x1200_Natural.png?6454">
-
-----------
-Natural finish 
-Vic. Ash  timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural_Z.png?6454">
-
-Black painted 
-Vic. Ash timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Black_Z.png?6454">
-
-White painted
-Vic. Ash timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_White_Z.png?6454">
---------------
-Full bleed
-200x300mm
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural_Z.png?6454">
-
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_215x300_Natural_B_Z.png?6454">
-#############
-square
-30x30cm $90 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural.png?6454">
-60x60cm $180 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x600_Natural.png?6454">
-90x90cm $280 Printed, framed & delivered
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_900x900_Natural.png?6454">
+.preview.zoomed.mm300x215b .preview-image {
+    max-width: 66%;
+}
+.preview.zoomed.mm300x200 .preview-image {
+    max-width: 79%;
+}
 -----
-Natural finish 
-Vic. Ash  timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural_Z.png?6454">
-Black painted 
-Vic. Ash timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Black_Z.png?6454">
-White painted
-Vic. Ash timber
-15mm face
-30mm depth
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_White_Z.png?6454">
-----
-Full bleed
-300x300mm
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural_Z.png?6454">
-
-<img class="frame-image" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural_B_Z.png?6454">
-
-#frame-builder-app>section .option-slider .option-slide .preview {
-    position: absolute;
-    left: calc((870 - 600) / 2 / 870 * 100%);
-    top: calc((870 - 230 - 600) / 870 * 100%);
-    width: calc(600 / 870 * 100%);
-    height: calc(600 / 870 * 100%);
+bordered
+-preview zoomed mm300x215b
+=====
+-preview zoomed mm300x200
+###########
+portrait
+.preview.zoomed.mm200x300 .preview-image {
+    max-height: 79%;
 }
-.preview .preview-image, .preview .frame-image {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    max-width: 100%;
-    max-height: 100%;
-    transition: opacity 0.5s;
-    -webkit-backface-visibility: hidden;
+.preview.zoomed.mm215x300b .preview-image {
+    max-height: 66%;
 }
-.preview.mm300x300 .preview-image {
-    max-width: 27%;
+-----
+bordered
+-preview zoomed mm215x300b
+=========
+-preview zoomed mm200x300
+#########
+square
+.preview.zoomed.mm300x300 .preview-image {
+    max-width: 79%;
 }
-.preview.mm600x600 .preview-image {
-    max-width: 55%;
+.preview.zoomed.mm300x300b .preview-image {
+    max-width: 66%;
 }
-.preview.mm900x900 .preview-image {
-    max-width: 83%;
-}
+---
+bordered
+-preview zoomed mm300x300b
+====
+-preview zoomed mm300x300
