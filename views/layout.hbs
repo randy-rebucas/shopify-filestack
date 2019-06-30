@@ -15,28 +15,19 @@
     <meta name="author" content="Randy Rebucas">
     <meta name="mail" content="rebucasrandy1986@gmail.com">
 
-    <script src="https://unpkg.com/@shopify/app-bridge"></script>
-    <script>
-        var AppBridge = window['app-bridge'];
-        var actions = window['app-bridge'].actions;
-    </script>
+    <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Shopify Filestack API</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/products">Frames</a>
-                </li>
-            </ul>
+        
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <div class="ml-auto">
+                <a href="/products/create" class="btn btn-primary d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3">Create Products</a>
+            </div>
         </div>
     </nav>
 

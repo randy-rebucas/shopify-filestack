@@ -1,0 +1,242 @@
+<legend>Choose your format...</legend>
+<div class="form-group">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="aspect" id="aspect-landscape" value="landscape">
+        <label class="form-check-label" for="aspect-landscape">Landscape</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="aspect" id="aspect-portrait" value="portrait">
+        <label class="form-check-label" for="aspect-portrait">Portrait</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="aspect" id="aspect-square" value="square">
+        <label class="form-check-label" for="aspect-square">Square</label>
+    </div>
+</div>
+<div class="form-group">
+    <button class="btn btn-primary next-link upload-button" onclick="uploadImage()" id="upload">Upload Image</button>
+</div>
+<p>Framing does not get much easier than this. Follow these 4 easy steps and we will have the finished work back to you in two weeks.</p>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+    const formatOptions = {
+        landscape: 16 / 10.5,  //16:9
+        portrait: 2.8 / 4,    //4:3
+        square: 1 / 1       //1:1
+    };
+
+    var format = null;
+
+    $('#upload').prop('disabled', true);
+
+    $(document).ready(function() {
+        
+        $('#variants li a').bind('click', function(event) {
+			//checkTab();
+			//event.preventDefault();
+		});
+
+        $("input[name='aspect']").click(function() {
+            var formatValue = $("input[name='aspect']:checked").val();
+            setFormat(formatValue);
+            $('#upload').prop('disabled', false);
+
+            $("[name='variantFormat']").val(getFormat());
+        });
+
+        
+    });
+
+    function setFormat(formatValue) {
+        format = formatValue;
+    }
+
+    function getFormat() {
+        return format;
+    }
+
+    function setSizeFrame() {
+        var wrapClass = null;
+        var wrapFrame = null;
+        switch(getSize()) {
+            //landscape
+            case '30x20cm':
+                wrapClass = 'mm300x200';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural.png?6454';
+            break;
+            case '60x40cm':
+                wrapClass = 'mm600x400';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x400_Natural.png?6454';
+            break;
+            case '90x60cm':
+                wrapClass = 'mm900x600';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_900x600_Natural.png?6454';
+            break;
+            case '120x80cm':
+                wrapClass = 'mm1200x800';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_1200x800_Natural.png?6454';
+            break;
+            //portrait
+            case '20x30cm':
+                wrapClass = 'mm200x300';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural.png?6454';
+            break;
+            case '40x60cm':
+                wrapClass = 'mm400x600';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_400x600_Natural.png?6454';
+            break;
+            case '60x90cm':
+                wrapClass = 'mm600x900';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x900_Natural.png?6454';
+            break;
+            case '80x120cm':
+                wrapClass = 'mm800x1200';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_800x1200_Natural.png?6454';
+            break;
+            //square
+            case '60x60cm':
+                wrapClass = 'mm600x600';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x600_Natural.png?6454';
+            break;
+            case '90x90cm':
+                wrapClass = 'mm900x900';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_900x900_Natural.png?6454';
+            break;
+            default: //30x30cm
+                wrapClass = 'mm300x300';
+                wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural.png?6454';
+        }
+        $('.preview').removeClass('mm300x200 mm600x400 mm900x600 mm1200x800 mm200x300 mm400x600 mm600x900 mm800x1200 mm300x300 mm600x600 mm900x900').addClass(wrapClass);
+
+        $('.frame-image').remove();
+        $('<img class="frame-image" src="'+wrapFrame+'"/>').appendTo('.preview');
+    }
+    
+    function uploadImage() {
+        const client = filestack.init('AyttY1npLTImAmrYGmYOpz');
+
+        let options = {
+            transformations: {
+                crop: {
+                    aspectRatio: formatOptions[getFormat()],
+                    force: true
+                },
+                circle: false,
+                rotate: false,
+            },
+            accept: [
+                "image/*"
+            ],
+            storeTo: {
+                "container": "devportal-customers-assets",
+                "path": "frame-uploads/",
+                "region": "us-east-1"
+            },
+            onFileSelected: file => {
+                // If you throw any error in this function it will reject the file selection.
+                // The error message will be displayed to the user as an alert.
+                if (file.size > 1000 * 1000) {
+                    throw new Error('File too big, select something smaller than 1MB');
+                }
+            },
+            onUploadDone: (res) => {
+                var uploadedFile = res.filesUploaded[0];
+                /*
+                below is the response data
+                filename: "xvar.png"
+                handle: "CM3Vx4S2aaZBMnwcjdwg"
+                mimetype: "image/png"
+                originalFile: {name: "xvar.png", type: "image/png", size: 693926}
+                originalPath: "xvar.png"
+                size: 37017
+                source: "local_file_system"
+                status: "Stored"
+                uploadId: "f4be7cvt4K7AYguR"
+                url: "https://cdn.filestackcontent.com/CM3Vx4S2aaZBMnwcjdwg"
+                */
+                $('.preview').empty();
+                $('<img class="preview-image" src="' + uploadedFile.url + '"/>').appendTo('.preview');
+                $("[name='variantImage']").val(uploadedFile.url);
+
+                var dimensionTemp = '<legend>Choose your size...</legend>';
+
+                var selectedFormat = getFormat();
+                switch(selectedFormat) {
+                    case 'landscape':
+                        dimensionTemp += '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x20cm" value="30x20cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-30x20cm">30x20cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x40cm" value="60x40cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x40cm">60x40cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x60cm" value="90x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-90x60cm">90x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-120x80cm" value="120x80cm">'+
+                                                '<label class="form-check-label" for="dimensions-120x80cm">120x80cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                        setSize('30x20cm');
+                    break;
+                    case 'portrait':
+                        dimensionTemp += '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-20x30cm" value="20x30cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-20x30cm">20x30cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-40x60cm" value="40x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-40x60cm">40x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x90cm" value="60x90cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x90cm">60x90cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-80x120cm" value="80x120cm">'+
+                                                '<label class="form-check-label" for="dimensions-80x120cm">80x120cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                        setSize('20x30cm');
+                    break;
+                    default: //square
+                        dimensionTemp += '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x30cm" value="30x30cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-30x30cm">30x30cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x60cm" value="60x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x60cm">60x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x90cm" value="90x90cm">'+
+                                                '<label class="form-check-label" for="dimensions-90x90cm">90x90cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                    setSize('30x30cm');
+                }
+                dimensionTemp += '<p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>'+
+                                        '<p>Contact us for custom sizes.</p>';
+                $('#size').empty().append(dimensionTemp);
+                
+                setFormValue();
+               
+                $('#variants li:nth-child(2) a')
+                    .removeClass('disabled')
+                    .removeAttr('tabindex aria-disabled')
+                    .tab('show');
+
+                setSizeFrame();
+            },
+        };
+
+        client.picker(options).open();
+    }
+
+</script>
