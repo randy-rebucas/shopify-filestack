@@ -31,12 +31,16 @@ var Shopify = new shopifyAPI({
 /* GET home page. */
 router.get('/', function(req, res, next) {
     Shopify.get('/admin/products.json', function(err, data, headers){
-        res.json(data);
+        //res.json(data);
+        res.render('products', { 
+            title: 'Products',
+            products: data.products
+        });
 	});
 });
 
 router.get('/create', function(req, res, next) {
-    res.render('products', { title: 'Products' });
+    res.render('products-create', { title: 'Create Products' });
 });
 
 router.post('/', function(req, res, next) {

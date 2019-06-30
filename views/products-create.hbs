@@ -1,0 +1,1343 @@
+<style>
+	.container {
+		padding-top: 1em;
+	}
+    section .container .row:last-child div {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    section .container .row:last-child {
+        height: 680px;
+        position: relative;
+    }
+    .preview {
+        position: absolute;
+        left: calc((600 - 600) / 2 / 670 * 100%);
+        top: calc((800 - 230 - 600) / 800 * 100%);
+        width: calc(600 / 600 * 100%);
+        height: calc(600 / 600 * 100%);
+    }
+    .preview .preview-image, .preview .frame-image {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        max-width: 100%;
+        max-height: 100%;
+        transition: opacity 0.5s;
+        -webkit-backface-visibility: hidden;
+    }
+    /*sizes*/
+    /*Square*/
+    .preview.mm300x300 .preview-image {
+        max-width: 17%;
+    }
+    .preview.mm600x600 .preview-image {
+        max-width: 34%;
+    }
+    .preview.mm900x900 .preview-image {
+        max-width: 51%;
+    }
+    /*Landscape*/
+    .preview.mm300x200 .preview-image {
+        max-width: 16%;
+    }
+    .preview.mm600x400 .preview-image {
+        max-width: 34%;
+    }
+    .preview.mm900x600 .preview-image {
+        max-width: 51%;
+    }
+    .preview.mm1200x800 .preview-image {
+        max-width: 55%;
+        top: 49.5%;
+        left: 49.5%;
+    }
+    /*Portrait*/
+    .preview.mm200x300 .preview-image {
+        max-height: 27%;
+    }
+    .preview.mm400x600 .preview-image {
+        max-height: 55%;
+    }
+    .preview.mm600x900 .preview-image {
+        max-height: 83%;
+    }
+    .preview.mm800x1200 .preview-image {
+        max-height: 84%;
+        top: 49.4%;
+        left: 49.7%;
+    }
+    /*
+    frames
+    */
+    .preview.zoomed.mm300x200 .preview-image {
+        max-width: 48%;
+    }
+    .preview.zoomed.mm200x300 .preview-image {
+        max-height: 79%;
+    }
+    .preview.zoomed.mm300x300 .preview-image {
+        max-width: 48%;
+    }
+    /*
+    borders
+    */
+    /*landscape*/
+    .preview.zoomed.mm300x215b .preview-image {
+        max-width: 40%;
+    }
+    /*portrait*/
+    .preview.zoomed.mm215x300b .preview-image {
+        max-height: 62%;
+    }
+    /*sqaure*/
+    .preview.zoomed.mm300x300b .preview-image {
+        max-width: 40%;
+    }
+    
+</style>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills nav-fill" id="variants" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="format-tab" data-toggle="tab" href="#format" role="tab" aria-controls="format" aria-selected="true">Format</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="size-tab" data-toggle="tab" href="#size" role="tab" aria-controls="size" aria-selected="false">Size</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="frame-tab" data-toggle="tab" href="#frame" role="tab" aria-controls="frame" aria-selected="false">Frame</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="border-tab" data-toggle="tab" href="#border" role="tab" aria-controls="border" aria-selected="false">Border</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="format" role="tabpanel" aria-labelledby="format-tab">
+                        <legend>Choose your format...</legend>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aspect" id="aspect-landscape" value="landscape">
+                                <label class="form-check-label" for="aspect-landscape">Landscape</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aspect" id="aspect-portrait" value="portrait">
+                                <label class="form-check-label" for="aspect-portrait">Portrait</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="aspect" id="aspect-square" value="square">
+                                <label class="form-check-label" for="aspect-square">Square</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary next-link upload-button" onclick="uploadImage()" id="upload">Upload Image</button>
+                        </div>
+                        <p>Framing does not get much easier than this. Follow these 4 easy steps and we will have the finished work back to you in two weeks.</p>
+                    </div>
+                    <div class="tab-pane" id="size" role="tabpanel" aria-labelledby="size-tab">
+                        <legend>Choose your size...</legend>
+                        
+                    </div>
+                    <div class="tab-pane" id="frame" role="tabpanel" aria-labelledby="frame-tab">
+                        <legend>Choose your frame...</legend>
+                        
+                    </div>
+                    <div class="tab-pane" id="border" role="tabpanel" aria-labelledby="border-tab">
+
+                        <legend>Choose your border...</legend>
+
+                    </div>
+                </div>
+				<form action="/products" method="post" id="productForm">
+					<input type="hidden" name="variantImage" value=""/>
+					<input type="hidden" name="variantFormat" value=""/>
+					<input type="hidden" name="variantSize" value=""/>
+					<input type="hidden" name="variantFrame" value=""/>
+					<input type="hidden" name="variantBorder" value=""/>
+					<input type="hidden" name="productPrice" value=""/>
+					<input type="hidden" name="productDescription" value=""/>
+					<input type="submit" name="submit" value="Add to Cart" class="btn btn-success" id="add-to-cart"/>
+				</form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="preview">
+                    <img data-src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" class="preview-image"/>
+                </div>
+               
+            </div>
+        </div> 
+        <!-- Content here -->
+    </div>
+</section>
+
+<script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+    const formatOptions = {
+        landscape: 16 / 10.5,  //16:9
+        portrait: 2.8 / 4,    //4:3
+        square: 1 / 1       //1:1
+    };
+
+    var format = null;
+    var size = null;
+    var frame = null;
+    var border = null;
+	var price = 0;
+	var description = null;
+	
+    $('#upload').prop('disabled', true);
+    $('#add-to-cart').hide();
+
+    checkTab();
+    setFormValue();
+
+    $(document).ready(function() {
+        
+        $('#variants li a').bind('click', function(event) {
+			switch($(this).text()) {
+				case 'Size':
+					setSize(getSize());
+					frame = null;
+					border = null;
+				break;
+				case 'Frame':
+					setFrame(getFrame());
+					border = null;
+				break;
+				case 'Border':
+					setBorder(getBorder());
+					border = null;
+				break;
+				default:
+					setFormat(getFormat());
+					size = null;
+					frame = null;
+					border = null;
+
+					$('.preview').empty().append('<img data-src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" class="preview-image"/>');
+					$('.preview').find('.frame-image').remove();
+
+					$('#variants li:first-child a')
+						.removeClass('disabled')
+						.removeAttr('tabindex aria-disabled')
+						.tab('show');  
+
+					checkTab();
+			}
+			
+            populateStyles();
+			setFormValue();
+			//event.preventDefault();
+		});
+
+        $("input[name='aspect']").click(function() {
+            var formatValue = $("input[name='aspect']:checked").val();
+            setFormat(formatValue);
+            $('#upload').prop('disabled', false);
+        });
+
+        $(document).on("click", "input[name='dimensions']", function(e) {
+            var sizeValue = $("input[name='dimensions']:checked").val();
+			console.log(sizeValue + ' sized checked!');
+            setSize(sizeValue);
+            setFormValue();
+            populateStyles();
+        });
+
+		        
+        $(document).on("click", "#btnSizeSelect", function(e) {
+            
+            $('#variants li:nth-child(3) a')
+                .removeClass('disabled')
+                .removeAttr('tabindex aria-disabled')
+                .tab('show');  
+
+            var frameTemp = '<legend>Choose your frame...</legend>';
+            frameTemp += '<div class="form-group">'+
+                            '<div class="form-check form-check-inline">'+
+                                '<input class="form-check-input" type="radio" name="frame" id="frame-natural" value="natural" checked>'+
+                                '<label class="form-check-label" for="frame-natural">Natural</label>'+
+                            '</div>'+
+                            '<div class="form-check form-check-inline">'+
+                                '<input class="form-check-input" type="radio" name="frame" id="frame-black" value="black">'+
+                                '<label class="form-check-label" for="frame-black">Black</label>'+
+                            '</div>'+
+                            '<div class="form-check form-check-inline">'+
+                                '<input class="form-check-input" type="radio" name="frame" id="frame-white" value="white">'+
+                                '<label class="form-check-label" for="frame-white">White</label>'+
+                            '</div>'+
+                        '</div>';
+            frameTemp += '<button id="btnFrameSelect" class="btn btn-primary">Select</button>';
+            frameTemp += '<p>For a sleek, gallery style treatment we use a deep shadow box frame profile. Artwork is set back from the acrylic glazing, appearing to float in the frame.</p>';
+
+            $('#frame').empty().append(frameTemp);
+
+            setFrame('natural');
+            populateStyles();
+        });
+
+        $(document).on("click", "input[name='frame']", function(e) {
+            var frameValue = $("input[name='frame']:checked").val();
+			console.log(frameValue + ' frame checked!');
+            setFrame(frameValue);
+            setFormValue();
+            populateStyles();
+        });
+
+		$(document).on("click", "#btnFrameSelect", function(e) {
+            
+            $('#variants li:last-child a')
+                .removeClass('disabled')
+                .removeAttr('tabindex aria-disabled')
+                .tab('show');
+
+            var borderTemp = '<legend>Choose your frame...</legend>'+
+                                '<div class="form-group">'+
+                                    '<div class="form-check form-check-inline">'+
+                                        '<input class="form-check-input" type="radio" name="border" id="border-fullImage" value="Full Image" checked>'+
+                                        '<label class="form-check-label" for="border-fullImage">Full Image</label>'+
+                                    '</div>'+
+                                    '<div class="form-check form-check-inline">'+
+                                        '<input class="form-check-input" type="radio" name="border" id="border-whiteBorder" value="White Border">'+
+                                        '<label class="form-check-label" for="border-whiteBorder">White Border</label>'+
+                                    '</div>'+
+                                '</div>';
+
+            borderTemp += '<button id="btnBorderSelect" class="btn btn-primary">Select</button>';
+            borderTemp += '<p>Frame your image right to the edge for a sleek contemporary look or allow some space around the image for a more traditional feel.</p>';
+
+            $('#border').empty().append(borderTemp);
+            
+            setBorder('Full Image');
+            populateStyles();
+        });
+
+        $(document).on("click", "input[name='border']", function(e) {
+            var borderValue = $("input[name='border']:checked").val();
+			console.log(borderValue + ' border checked!');
+            setBorder(borderValue);
+            setFormValue();
+            populateStyles();
+        });
+			
+        $(document).on("click", "#btnBorderSelect", function(e) {
+            $('#add-to-cart').show();
+			setFormValue();
+        });
+
+    });
+
+    function checkTab() {
+        $('.nav-fill .nav-item a').each(function() {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('disabled').removeAttr('tabindex aria-disabled');
+            } else {
+                $(this).addClass('disabled').attr({
+                    "tabindex":"-1", 
+                    "aria-disabled":"true"
+                });
+            }
+        });
+    }
+
+    function setFormat(formatValue) {
+        format = formatValue;
+    }
+
+    function getFormat() {
+        return format;
+    }
+
+    function setSize(sizeValue) {
+        size = sizeValue;
+    }
+
+    function getSize() {
+        return size;
+    }
+
+    function setFrame(frameValue) {
+        frame = frameValue;
+    }
+
+    function getFrame() {
+        return frame;
+    }
+
+    function setBorder(borderValue) {
+        border = borderValue;
+    }
+
+    function getBorder() {
+        return border;
+    }
+
+	function setPrice(priceValue) {
+        price = priceValue;
+    }
+
+    function getPrice() {
+        return price;
+    }
+
+	function setDescription(descriptionValue) {
+        description = descriptionValue;
+    }
+
+    function getDescription() {
+        return description;
+    }
+
+    function setFormValue() {
+        $("[name='variantFormat']").val(getFormat());
+        $("[name='variantSize']").val(getSize());
+        $("[name='variantFrame']").val(getFrame());
+        $("[name='variantBorder']").val(getBorder());
+		$("[name='productPrice']").val(getPrice());
+		$("[name='productDescription']").val(getDescription());
+    }
+
+    function uploadImage() {
+        const client = filestack.init('ARfk3d7FlQXKJs0VjIlNgz');
+
+        let options = {
+            transformations: {
+                crop: {
+                    aspectRatio: formatOptions[getFormat()],
+                    force: true
+                },
+                circle: false,
+                rotate: false,
+            },
+            accept: [
+                "image/*"
+            ],
+            storeTo: {
+                "container": "devportal-customers-assets",
+                "path": "frame-uploads/",
+                "region": "us-east-1"
+            },
+            onFileSelected: file => {
+                // If you throw any error in this function it will reject the file selection.
+                // The error message will be displayed to the user as an alert.
+                if (file.size > 1000 * 1000) {
+                    throw new Error('File too big, select something smaller than 1MB');
+                }
+            },
+            onUploadDone: (res) => {
+                var uploadedFile = res.filesUploaded[0];
+                /*
+                below is the response data
+                filename: "xvar.png"
+                handle: "CM3Vx4S2aaZBMnwcjdwg"
+                mimetype: "image/png"
+                originalFile: {name: "xvar.png", type: "image/png", size: 693926}
+                originalPath: "xvar.png"
+                size: 37017
+                source: "local_file_system"
+                status: "Stored"
+                uploadId: "f4be7cvt4K7AYguR"
+                url: "https://cdn.filestackcontent.com/CM3Vx4S2aaZBMnwcjdwg"
+                */
+                $('.preview').empty();
+                $('<img class="preview-image" src="' + uploadedFile.url + '"/>').appendTo('.preview');
+                $("[name='variantImage']").val(uploadedFile.url);
+
+                var dimensionTemp = '<legend>Choose your size...</legend>';
+
+                var selectedFormat = getFormat();
+                switch(selectedFormat) {
+                    case 'landscape':
+                        dimensionTemp += '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x20cm" value="30x20cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-30x20cm">30x20cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x40cm" value="60x40cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x40cm">60x40cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x60cm" value="90x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-90x60cm">90x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-120x80cm" value="120x80cm">'+
+                                                '<label class="form-check-label" for="dimensions-120x80cm">120x80cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                        setSize('30x20cm');
+                    break;
+                    case 'portrait':
+                        dimensionTemp += '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-20x30cm" value="20x30cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-20x30cm">20x30cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-40x60cm" value="40x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-40x60cm">40x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x90cm" value="60x90cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x90cm">60x90cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-80x120cm" value="80x120cm">'+
+                                                '<label class="form-check-label" for="dimensions-80x120cm">80x120cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                        setSize('20x30cm');
+                    break;
+                    default: //square
+                        dimensionTemp += '<div class="form-group">'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x30cm" value="30x30cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-30x30cm">30x30cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x60cm" value="60x60cm">'+
+                                                '<label class="form-check-label" for="dimensions-60x60cm">60x60cm</label>'+
+                                            '</div>'+
+                                            '<div class="form-check form-check-inline">'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x90cm" value="90x90cm">'+
+                                                '<label class="form-check-label" for="dimensions-90x90cm">90x90cm</label>'+
+                                            '</div>'+
+                                        '</div>';
+                    setSize('30x30cm');
+                }
+                dimensionTemp += '<button id="btnSizeSelect" class="btn btn-primary">Select</button>';
+                dimensionTemp += '<p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>'+
+                                        '<p>Contact us for custom sizes.</p>';
+                $('#size').empty().append(dimensionTemp);
+                
+                setFormValue();
+                populateStyles();
+
+                $('#variants li:nth-child(2) a')
+                    .removeClass('disabled')
+                    .removeAttr('tabindex aria-disabled')
+                    .tab('show');
+
+            },
+        };
+
+        client.picker(options).open();
+    }
+    /*
+        @todo:
+            unset var value on switching
+    */
+    function populateStyles() {
+        var wrapClass = null;
+        var wrapFrame = null;
+        /*
+		Load Format Aspects
+		landscape/portrait/square
+		*/
+		switch(getFormat()) {
+            case 'landscape':
+				/*Let's Check if there is any sizes seected*/
+				if(getSize()) {
+					/*
+					Load Dimensions
+					30x20cm/60x40cm/90x60cm/120x80
+					*/
+					switch(getSize()) {
+						case '30x20cm':
+							wrapClass = 'mm300x200';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural.png?6454';
+							
+							setDescription('Printed, framed & delivered');
+							setPrice('90');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										wrapClass = 'zoomed mm300x200';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Black_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm300x200';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Black_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm300x200';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x215_Black_B_Z.png?6454';
+											}
+										}
+									break;
+									case 'white':
+										wrapClass = 'zoomed mm300x200';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_White_Z.png?6454';
+						
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm300x200';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_White_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm300x200';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x215_White_B_Z.png?6454';
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										wrapClass = 'zoomed mm300x200';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural_Z.png?6454';
+						
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm300x200';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x200_Natural_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm300x215b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x215_Natural_B_Z.png?6454';
+											}
+										}
+								}
+							}
+						break;
+						case '60x40cm':
+							wrapClass = 'mm600x400';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x400_Natural.png?6454';
+							
+							setDescription('Printed, framed & delivered');
+							setPrice('180');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+						break;
+						case '90x60cm':
+							wrapClass = 'mm900x600';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_900x600_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('280');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+						break;
+						/*Default: 120x80*/
+						default: 
+							wrapClass = 'mm1200x800';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_1200x800_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('550');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+					}
+				}
+				
+            break;
+            case 'portrait':
+				/*Let's Check if there is any sizes seected*/
+				if(getSize()) {
+					/*
+					Load Dimensions
+					20x30cm/40x60cm/60x90cm/80x120
+					*/
+					switch(getSize()) {
+						case '20x30cm':
+							wrapClass = 'mm200x300';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('90');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										wrapClass = 'zoomed mm200x300';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Black_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm200x300';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Black_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm215x300b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_215x300_Black_B_Z.png?6454';
+											}
+										}
+									break;
+									case 'white':
+										wrapClass = 'zoomed mm200x300';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_White_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm200x300';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_White_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm215x300b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_215x300_White_B_Z.png?6454';
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										wrapClass = 'zoomed mm200x300';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm200x300';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_200x300_Natural_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm215x300b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_215x300_Natural_B_Z.png?6454';
+											}
+										}
+								}
+							}
+						break;
+						case '40x60cm':
+							wrapClass = 'mm400x600';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_400x600_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('180');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+						break;
+						case '60x90cm':
+							wrapClass = 'mm600x900';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x900_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('280');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+						break;
+						/*Default: 80x120*/
+						default:
+							wrapClass = 'mm800x1200';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_800x1200_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('550');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+					}
+				}
+            break;
+			/*Default: square*/
+            default: 
+				/*Let's Check if there is any sizes seected*/
+				if(getSize()) {
+					/*
+					Load Dimensions
+					60x60cm/90x90cm/30x30cm
+					*/
+					switch(getSize()) {
+						case '30x30cm':
+							wrapClass = 'mm300x300';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('90');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										wrapClass = 'zoomed mm300x300';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Black_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm300x300';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Black_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm300x300b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Black_B_Z.png?6454';
+											}
+										}
+									break;
+									case 'white':
+										wrapClass = 'zoomed mm300x300';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_White_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm300x300';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_White_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm300x300b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_White_B_Z.png?6454';
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										wrapClass = 'zoomed mm300x300';
+										wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural_Z.png?6454';
+										
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+													wrapClass = 'zoomed mm300x300';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural_Z.png?6454';
+												break;
+												/*Default: White Border*/
+												default:
+													wrapClass = 'zoomed mm300x300b';
+													wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_300x300_Natural_B_Z.png?6454';
+											}
+										}
+								}
+							}
+						break;
+						case '90x90cm':
+							wrapClass = 'mm900x900';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_900x900_Natural.png?6454';
+							
+							setDescription('Printed, framed & delivered');
+							setPrice('280');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+								}
+							}
+						break;
+						/*Default: 60x60cm*/
+						default:
+							wrapClass = 'mm600x600';
+							wrapFrame = '//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/Frame_600x600_Natural.png?6454';
+
+							setDescription('Printed, framed & delivered');
+							setPrice('180');
+
+							if(getFrame()) {
+								/*
+								Load Frame Color
+								black/white/natural
+								*/
+								switch(getFrame()) {
+									case 'black':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									case 'white':
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+									break;
+									/*Default: Natural*/
+									default: 
+										if(getBorder()) {
+											/*
+											Load Border Style
+											Full Image/White Border
+											*/
+											switch(getBorder()) {
+												case 'Full Image':
+												
+												break;
+												/*Default: White Border*/
+												default:
+												
+											}
+										}
+										
+								}
+							}
+							
+					}
+				}
+				
+		}
+
+        $('.preview').removeClass('zoomed mm300x200 mm600x400 mm900x600 mm1200x800 mm200x300 mm400x600 mm600x900 mm800x1200 mm300x300 mm600x600 mm900x900 mm300x300b mm215x300b mm300x215b').addClass(wrapClass);
+
+        $('.frame-image').remove();
+        $('<img class="frame-image" src="'+wrapFrame+'"/>').appendTo('.preview');
+    }
+</script>
