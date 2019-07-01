@@ -44,22 +44,46 @@ router.get('/create', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    
+    //P,L,S         {aspects}
+    //30X20         {size}
+    //NA,BL,WH      {frame}
+    //FI,WB         {border}
+    /**
+     * Sample SKU
+     * P-30X20-NA-FI
+     * {aspects}-{size}-{frame}-{border}
+     */
+    var productDescription = req.body.productDescription;
+    var productPrice = req.body.productPrice;
+    var productImage = req.body.variantImage;
+
+    var variantFormat = req.body.variantFormat;
+    var variantSize = req.body.variantSize;
+    var variantFrame = req.body.variantFrame;
+    var variantBorder = req.body.variantBorder;
+
+    var aspect = variantFormat.charAt(0).toUpperCase();
+    var size = variantSize.toUpperCase()
+    var frame = variantFrame.substring(0, 2).toUpperCase();
+    var border = variantBorder.substring(0, 2).toUpperCase();
+    var elem = [aspect, size, frame, border];
+    var sku = elem.join('-');
+
     var post_data = {
         "product": {
-            "title": req.body.variantFormat,
-            "body_html": req.body.productDescription,
+            "title": 'Online Print and Frame',//variantFormat,
+            "body_html": productDescription,
             "vendor": "benmessina", //use active user
             "product_type": "Custom Frame",
-            "metafields_global_title_tag": req.body.variantFormat,
-            "metafields_global_description_tag": req.body.productDescription,
+            "metafields_global_title_tag": variantFormat,
+            "metafields_global_description_tag": productDescription,
             "tags": "custom-frames, sizes, borders",
             "published": true,
-            "created_at": new Date().toISOString(),
+            //"created_at": new Date().toISOString(),
             "fulfillment_service": "manual",
             "requires_shipping": false,
             "images": [{
-                "src": req.body.variantImage // frame aspects
+                "src": productImage
             }],
             "options": [{
                     "position": 1,
@@ -76,11 +100,11 @@ router.post('/', function(req, res, next) {
             ],
             "variants": [{
                 //"image_id": req.body.image,          //filestack image id
-                "option1": req.body.variantSize, // string
-                "option2": req.body.variantFrame, // string
-                "option3": req.body.variantBorder, // string
-                "price": req.body.productPrice, // generate price depend on selection
-                "sku": "1234" // generate uniqe sku req.body.join('-')
+                "option1": variantSize, 
+                "option2": variantFrame, 
+                "option3": variantBorder, 
+                "price": productPrice, 
+                "sku": sku 
             }]
         }
     }
