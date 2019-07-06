@@ -10,7 +10,7 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products, write_products';
-const forwardingAddress = 'https://cb895f6e.ngrok.io'; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = 'https://9d63bf5e.ngrok.io'; // Replace this with your HTTPS Forwarding address
 
 router.get('/', (req, res) => {
     const shop = req.query.shop;
@@ -84,11 +84,10 @@ router.get('/callback', (req, res) => {
 
                 request.get(shopRequestUrl, { headers: shopRequestHeaders })
                     .then((shopResponse) => {
-                        //var response = shopResponse;
-                        //console.log(response.shop);
-                        //res.status(200).end(response);
+                        var store = JSON.parse(shopResponse);
+                        console.log("Store:", store.shop.name);
                         res.status(200).redirect('/');
-                        //res.render('shopify', { title: 'Shopify', data:  shopResponse});
+                        //res.render('index', { title: 'Shopify', data:  shopResponse});
                     })
                     .catch((error) => {
                         res.status(error.statusCode).send(error.error.error_description);

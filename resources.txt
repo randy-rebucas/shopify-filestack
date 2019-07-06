@@ -36,3 +36,63 @@ bordered
 -preview zoomed mm300x300b
 ====
 -preview zoomed mm300x300
+
+{  
+   "shop":{  
+      "id":7191461933,
+      "name":"premit",
+      "email":"cutsonwheel@gmail.com",
+      "domain":"premit.myshopify.com",
+      "province":"",
+      "country":"PH",
+      "address1":"058 Block-3 Lot-7 San Antonio 1",
+      "zip":"4105",
+      "city":"Cavite",
+      "source":null,
+      "phone":"",
+      "latitude":null,
+      "longitude":null,
+      "primary_locale":"en",
+      "address2":null,
+      "created_at":"2019-06-25T22:20:06-04:00",
+      "updated_at":"2019-07-03T06:56:03-04:00",
+      "country_code":"PH",
+      "country_name":"Philippines",
+      "currency":"PHP",
+      "customer_email":"cutsonwheel@gmail.com",
+      "timezone":"(GMT-05:00) Eastern Time (US \u0026 Canada)",
+      "iana_timezone":"America\/New_York",
+      "shop_owner":"premit Admin",
+      "money_format":"â‚±{{amount}}",
+      "money_with_currency_format":"â‚±{{amount}} PHP",
+      "weight_unit":"kg",
+      "province_code":null,
+      "taxes_included":false,
+      "tax_shipping":null,
+      "county_taxes":true,
+      "plan_display_name":"affiliate",
+      "plan_name":"affiliate",
+      "has_discounts":false,
+      "has_gift_cards":false,
+      "myshopify_domain":"premit.myshopify.com",
+      "google_apps_domain":null,
+      "google_apps_login_enabled":null,
+      "money_in_emails_format":"â‚±{{amount}}",
+      "money_with_currency_in_emails_format":"â‚±{{amount}} PHP",
+      "eligible_for_payments":false,
+      "requires_extra_payments_agreement":false,
+      "password_enabled":false,
+      "has_storefront":true,
+      "eligible_for_card_reader_giveaway":false,
+      "finances":true,
+      "primary_location_id":31362482221,
+      "checkout_api_supported":false,
+      "multi_location_enabled":true,
+      "setup_required":false,
+      "force_ssl":true,
+      "pre_launch_enabled":false,
+      "enabled_presentment_currencies":[  
+         "PHP"
+      ]
+   }
+}
