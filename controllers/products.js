@@ -20,7 +20,7 @@ exports.createProduct = (req, res, next) => {
      */
     var productDescription = req.body.productDescription;
     var productPrice = req.body.productPrice;
-    var productImage = req.body.variantImage;
+    var productImageUrl = req.body.variantImageUrl;
 
     var variantFormat = req.body.variantFormat;
     var variantSize = req.body.variantSize;
@@ -40,15 +40,15 @@ exports.createProduct = (req, res, next) => {
             "body_html": productDescription,
             "vendor": "benmessina", //use active user
             "product_type": "Custom Frame",
-            "metafields_global_title_tag": variantFormat,
-            "metafields_global_description_tag": productDescription,
-            "tags": "custom-frames, sizes, borders",
-            "published": true,
+            //"metafields_global_title_tag": variantFormat,
+            //"metafields_global_description_tag": productDescription,
+            //"tags": "custom-frames, sizes, borders",
+            //"published": true,
             //"created_at": new Date().toISOString(),
-            "fulfillment_service": "manual",
-            "requires_shipping": false,
+            //"fulfillment_service": "manual",
+            //"requires_shipping": false,
             "images": [{
-                "src": productImage
+                "src": productImageUrl
             }],
             "options": [{
                     "position": 1,
@@ -64,21 +64,42 @@ exports.createProduct = (req, res, next) => {
                 }
             ],
             "variants": [{
-                //"image_id": req.body.image,          //filestack image id
                 "option1": variantSize, 
                 "option2": variantFrame, 
                 "option3": variantBorder, 
                 "price": productPrice, 
                 "sku": sku 
-            }]
+            }],
+            "metafields": [
+                {
+                  "key": "filestackId",
+                  "value": productImageUrl, 
+                  "value_type": "string",
+                  "namespace": "filestack"
+                }
+            ]
         }
     }
     req.shopifyToken.post('/admin/api/2019-04/products.json', post_data, function(err, data, headers) {
-
+        //res.json(data.product.variants);
         var varients = data.product.variants;
+        //iterate all varients
         varients.forEach(function(item){
-            const redirection = 'http://' + req.shopifyToken.config.shop + '.myshopify.com/cart/add?id='+item.id;
-            res.status(200).redirect(redirection);
+            //set varient data to update product varient
+            var varient_data = {
+                "variant": {
+                    "id": data.product.id,              //product id
+                    "image_id": data.product.image.id   //product source image id
+                }
+            }
+            var varId = item.id + '.json';
+            //update varient image
+            req.shopifyToken.put('/admin/api/2019-04/variants/'+varId, varient_data, function(err, data, headers) {
+                //set cart redirection base on config store
+                const redirection = 'http://' + req.shopifyToken.config.shop + '.myshopify.com/cart/add?id='+item.id;
+                res.status(200).redirect(redirection);
+            });
+            
         });
 
     });

@@ -157,7 +157,7 @@
                     </div>
                 </div>
 				<form action="/products" method="post" id="productForm">
-					<input type="hidden" name="variantImage" value=""/>
+					<input type="hidden" name="variantImageUrl" value=""/>
 					<input type="hidden" name="variantFormat" value=""/>
 					<input type="hidden" name="variantSize" value=""/>
 					<input type="hidden" name="variantFrame" value=""/>
@@ -452,7 +452,7 @@
                 */
                 $('.preview').empty();
                 $('<img class="preview-image" src="' + uploadedFile.url + '"/>').appendTo('.preview');
-                $("[name='variantImage']").val(uploadedFile.url);
+                $("[name='variantImageUrl']").val(uploadedFile.url);
 
                 var dimensionTemp = '<legend>Choose your size...</legend>';
 
