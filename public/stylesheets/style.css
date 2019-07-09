@@ -1,7 +1,9 @@
+body {
+    background: #e2e2e2;
+}
 nav.navbar {
     margin-bottom: 2em;
 }
-
 .nav-fill .nav-item a:not(.active) {
     color: #b1b1b1;
 }
