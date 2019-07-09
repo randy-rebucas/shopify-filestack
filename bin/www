@@ -88,6 +88,5 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));

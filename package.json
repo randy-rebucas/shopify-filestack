@@ -14,6 +14,7 @@
     "filestack-js": "^3.3.3",
     "fs": "0.0.1-security",
     "handlebars-helpers": "^0.10.0",
+    "handlebars-intl": "^1.1.2",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "jquery": "^3.4.1",
