@@ -1,3 +1,5 @@
+{% layout 'layout' %}
+
 <style>
     section {
 		padding-top: 1em;
@@ -11,10 +13,9 @@
                     <a class="btn btn-primary" href="/orders" role="button">Orders</a>
                 </div>-->
                 <legend>General Settings</legend>
-                {{#each metafields}}
-
-                    {{this.key}}
-                {{/each}}
+                {% for metafield in metafields %}
+                    {{metafield.key}}
+                {% endfor %}
                 <form action="/" method="post" id="productForm">
                     <div class="form-group row">
                         <label for="filestackAPI" class="col-sm-4 col-form-label">Filestack API</label>
@@ -44,3 +45,7 @@
         </div>
     </div>
 </section>
+
+{% block 'footer' %}
+  Copyright @ 2016, Harttle
+{% endblock %}

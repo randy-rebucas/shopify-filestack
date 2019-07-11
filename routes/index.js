@@ -1,19 +1,11 @@
-const dotenv = require('dotenv').config();
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const shopifyConnection = require('../middleware/shopify-api');
 
-router.get('/', function(req, res, next) {
-  
-  const apiKey = process.env.SHOPIFY_API_KEY;
-  const apiSecret = process.env.SHOPIFY_API_SECRET;
+const MetafieldController = require('../controllers/metafields');
+/* GET order page. */
+router.get('/', shopifyConnection, MetafieldController.getShop);
 
-  const filestackAPI = process.env.FILESTACK_API;
-  res.render('index', { 
-    title: 'Filestack Shopify API' , 
-    apiKey: apiKey, 
-    apiSecret: apiSecret,
-    filestackAPI: filestackAPI
-  });
-});
+router.post('/', shopifyConnection, MetafieldController.createShop);
 
 module.exports = router;

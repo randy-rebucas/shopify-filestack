@@ -9,11 +9,22 @@ var shopifyRouter = require('./routes/shopify');
 var productsRouter = require('./routes/products');
 var ordersRouter = require('./routes/orders');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 var app = express();
 
+const liquid = require('liquidjs');
+
+const engine = new liquid({
+    root: __dirname, // for layouts and partials
+    extname: '.liquid'
+});
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.engine('liquid', engine.express()) // register liquid engine
+app.set('views', ['./partials', './views']) // specify the views directory
+app.set('view engine', 'liquid') // set to default
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,18 +39,18 @@ app.use('/orders', ordersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

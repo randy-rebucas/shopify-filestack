@@ -216,6 +216,7 @@
 	const protocol = `{{urlProtocol}}`;
 	const host = `{{urlHost}}`;
 	const forWardingAddress = protocol+'://'+host;
+	const filestackAPI = `{{filestackAPI}}`; //ARfk3d7FlQXKJs0VjIlNgz
 
     const formatOptions = {
         landscape: 16 / 10.5,  //16:9
@@ -443,7 +444,7 @@
     }
 
     function uploadImage() {
-        const client = filestack.init('ARfk3d7FlQXKJs0VjIlNgz');
+        const client = filestack.init(filestackAPI);
 
         let options = {
             transformations: {
@@ -457,11 +458,6 @@
             accept: [
                 "image/*"
             ],
-            storeTo: {
-                "container": "devportal-customers-assets",
-                "path": "frame-uploads/",
-                "region": "us-east-1"
-            },
             onFileSelected: file => {
                 // If you throw any error in this function it will reject the file selection.
                 // The error message will be displayed to the user as an alert.

@@ -7,19 +7,20 @@ const ProductController = require('../controllers/products');
 /* GET home page. */
 
 router.get('/create', function(req, res, next) {
-    res.render('products-create', { 
-        title: 'Create Products', 
-        urlHost: req.get('host'), 
-        urlProtocol: req.protocol 
+    res.render('products-create', {
+        title: 'Create Products',
+        urlHost: req.get('host'),
+        urlProtocol: req.protocol,
+        filestackAPI: process.env.FILESTACK_API
     });
 });
 
-router.get('/', shopifyConnection, ProductController.getProducts );
+router.get('/', shopifyConnection, ProductController.getProducts);
 
-router.post('/', shopifyConnection, ProductController.createProduct );
+router.post('/', shopifyConnection, ProductController.createProduct);
 
-router.put('/:productId', shopifyConnection, ProductController.updateProduct );
+router.put('/:productId', shopifyConnection, ProductController.updateProduct);
 
-router.delete('/:productId', shopifyConnection, ProductController.deleteProduct );
+router.delete('/:productId', shopifyConnection, ProductController.deleteProduct);
 
 module.exports = router;

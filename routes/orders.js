@@ -7,11 +7,11 @@ const OrderController = require('../controllers/orders');
 /*var Handlebars     = require('handlebars');
 var HandlebarsIntl = require('handlebars-intl');
 HandlebarsIntl.registerWith(Handlebars);*/
-var hbs = require('handlebars');
-hbs.registerHelper('hbs-intl', require('handlebars-intl'));
+//var hbs = require('handlebars');
+//hbs.registerHelper('hbs-intl', require('handlebars-intl'));
 
-router.get('/', shopifyConnection, OrderController.getOrders );
+router.get('/', shopifyConnection, OrderController.getOrders);
 
-router.get('/:orderId', shopifyConnection, OrderController.getOrder );
+router.get('/:orderId', shopifyConnection, OrderController.getOrder);
 
 module.exports = router;
