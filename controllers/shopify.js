@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const crypto = require('crypto');
 const cookie = require('cookie');
 const nonce = require('nonce')();
@@ -7,7 +9,7 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products, write_products';
-const forwardingAddress = 'https://778be902.ngrok.io'; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = 'https://059741f8.ngrok.io'; // Replace this with your HTTPS Forwarding address
 
 exports.connect = (req, res) => {
     const shop = req.query.shop;
