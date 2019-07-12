@@ -1,140 +1,17 @@
+{% layout 'layout' %}
 <style>
-	.container {
-		padding-top: 1em;
-	}
-    section .container .row:last-child div {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        white-space: nowrap;
-        overflow: hidden;
+    footer {
+        display: none;
     }
-    section .container .row:last-child {
-        height: 680px;
-        position: relative;
-    }
-    .preview {
-        position: absolute;
-        left: calc((600 - 600) / 2 / 670 * 100%);
-        top: calc((830 - 230 - 600) / 800 * 100%);
-        width: calc(600 / 600 * 100%);
-        height: calc(600 / 600 * 100%);
-    }
-    .preview .preview-image, .preview .frame-image {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        max-width: 100%;
-        max-height: 100%;
-        transition: opacity 0.5s;
-        -webkit-backface-visibility: hidden;
-    }
-    /*sizes*/
-    /*Square*/
-    .preview.mm300x300 .preview-image {
-        max-width: 27%;
-    }
-    .preview.mm600x600 .preview-image {
-        max-width: 53%;
-    }
-    .preview.mm900x900 .preview-image {
-        max-width: 60%;
-    }
-    /*Landscape*/
-    .preview.mm300x200 .preview-image {
-        max-width: 27%;
-    }
-    .preview.mm600x400 .preview-image {
-        max-width: 54%;
-    	width: 100%;
-    }
-    .preview.mm900x600 .preview-image {
-		max-width: 80%;
-    	width: 100%;
-    }
-    .preview.mm1200x800 .preview-image {
-        max-width: 91%;
-		width: 100%;
-		top: 50%;
-		left: 50%;
-    }
-    /*Portrait*/
-    .preview.mm200x300 .preview-image {
-        max-height: 42%;
-    }
-    .preview.mm400x600 .preview-image {
-        max-height: 82%;
-    }
-    .preview.mm600x900 .preview-image {
-        max-height: 94%;
-    }
-    .preview.mm800x1200 .preview-image {
-        max-height: 93%;
-    	top: 50%;
-    	left: 50%;
-    }
-    /*
-    frames
-    */
-    .preview.zoomed.mm300x200 .preview-image {
-        max-width: 27%;
-    }
-    .preview.zoomed.mm200x300 .preview-image {
-        max-height: 42%;
-    }
-    .preview.zoomed.mm300x300 .preview-image {
-        max-width: 27%;
-    }
-    /*
-    borders
-    */
-    /*landscape*/
-    .preview.zoomed.mm300x200b .preview-image {
-        max-width: 25%;
-    }
-	.preview.zoomed.mm600x400b .preview-image {
-    	max-width: 51%;
-    	width: 100%;
-    }
-	.preview.zoomed.mm900x600b .preview-image {
-		max-width: 77%;
-		width: 100%;
-	}
-	.preview.zoomed.mm1200x800b .preview-image {
-		max-width: 87%;
-		width: 100%;
-	}
-    /*portrait*/
-    .preview.zoomed.mm200x300b .preview-image {
-        max-height: 41%;
-    }
-	.preview.zoomed.mm400x600b .preview-image {
-		max-height: 74%;
-	}
-	.preview.zoomed.mm600x900b .preview-image {
-		max-height: 84%;
-	}
-	.preview.zoomed.mm800x1200b .preview-image {
-		max-height: 85%;
-	}
-    /*sqaure*/
-    .preview.zoomed.mm300x300b .preview-image {
-        max-width: 25%;
-    }
-    .preview.zoomed.mm600x600b .preview-image {
-		max-width: 50%;
-	}
-	.preview.zoomed.mm900x900b .preview-image {
-		max-width: 56%;
-	}
 </style>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+<section id="create-framed-product">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+                <div class="float-right btn-group" role="group" aria-label="Basic example">
+                    <a href="/" class="btn btn-primary">Home</a>
+                    <a href="/products" class="btn btn-secondary">Products</a>
+                </div>
                 <ul class="nav nav-pills nav-fill" id="variants" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="format-tab" data-toggle="tab" href="#format" role="tab" aria-controls="format" aria-selected="true">Format</a>
@@ -185,34 +62,40 @@
 
                     </div>
                 </div>
-				<form action="/products" method="post" id="productForm">
-					<input type="hidden" name="variantImageUrl" value=""/>
-					<input type="hidden" name="variantFormat" value=""/>
-					<input type="hidden" name="variantSize" value=""/>
-					<input type="hidden" name="variantFrame" value=""/>
-					<input type="hidden" name="variantBorder" value=""/>
-					<input type="hidden" name="productPrice" value=""/>
-					<input type="hidden" name="productDescription" value=""/>
-					<input type="submit" name="submit" value="Add to Cart" class="btn btn-success" id="add-to-cart"/>
-				</form>
+                <form action="/products" method="post" id="productForm">
+                    <input type="hidden" name="variantImageUrl" value=""/>
+                    <input type="hidden" name="variantFormat" value=""/>
+                    <input type="hidden" name="variantSize" value=""/>
+                    <input type="hidden" name="variantFrame" value=""/>
+                    <input type="hidden" name="variantBorder" value=""/>
+                    <input type="hidden" name="productPrice" value=""/>
+                    <input type="hidden" name="productDescription" value=""/>
+                    <input type="submit" name="submit" value="Add to Cart" class="btn btn-success" id="add-to-cart"/>
+                </form>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+            <div class="preview">
+                <img data-src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" class="preview-image"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="preview">
-                    <img data-src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" src="//cdn.shopify.com/s/files/1/1314/6345/t/31/assets/F_AppStep1.jpg?6454" class="preview-image"/>
-                </div>
-               
-            </div>
-        </div> 
-        <!-- Content here -->
     </div>
+    <!-- Content here -->
+  </div>
 </section>
-
+{% assign filestackAPI = null %}
+{% if metafield %}
+    {% for mf in metafield %}
+        {% if mf.key == "filestackAPI" %}
+            {% assign filestackAPI = mf.value %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script>
-	
+
 	const protocol = `{{urlProtocol}}`;
 	const host = `{{urlHost}}`;
 	const forWardingAddress = protocol+'://'+host;
@@ -230,7 +113,7 @@
     var border = null;
 	var price = 0;
 	var description = null;
-	
+
     $('#upload').prop('disabled', true);
     $('#add-to-cart').hide();
 
@@ -238,7 +121,6 @@
     setFormValue();
 
     $(document).ready(function() {
-        
         $('#variants li a').bind('click', function(event) {
 			switch($(this).text()) {
 				case 'Size':
@@ -266,11 +148,11 @@
 					$('#variants li:first-child a')
 						.removeClass('disabled')
 						.removeAttr('tabindex aria-disabled')
-						.tab('show');  
+						.tab('show');
 
 					checkTab();
 			}
-			
+
             populateStyles();
 			setFormValue();
 			//event.preventDefault();
@@ -290,13 +172,12 @@
             populateStyles();
         });
 
-		        
         $(document).on("click", "#btnSizeSelect", function(e) {
-            
+
             $('#variants li:nth-child(3) a')
                 .removeClass('disabled')
                 .removeAttr('tabindex aria-disabled')
-                .tab('show');  
+                .tab('show');
 
             var frameTemp = '<legend>Choose your frame...</legend>';
             frameTemp += '<div class="form-group">'+
@@ -331,7 +212,7 @@
         });
 
 		$(document).on("click", "#btnFrameSelect", function(e) {
-            
+
             $('#variants li:last-child a')
                 .removeClass('disabled')
                 .removeAttr('tabindex aria-disabled')
@@ -353,7 +234,7 @@
             borderTemp += '<p>Frame your image right to the edge for a sleek contemporary look or allow some space around the image for a more traditional feel.</p>';
 
             $('#border').empty().append(borderTemp);
-            
+
             setBorder('Full Image');
             populateStyles();
         });
@@ -365,7 +246,7 @@
             setFormValue();
             populateStyles();
         });
-			
+
         $(document).on("click", "#btnBorderSelect", function(e) {
             $('#add-to-cart').show();
 			setFormValue();
@@ -379,7 +260,7 @@
                 $(this).removeClass('disabled').removeAttr('tabindex aria-disabled');
             } else {
                 $(this).addClass('disabled').attr({
-                    "tabindex":"-1", 
+                    "tabindex":"-1",
                     "aria-disabled":"true"
                 });
             }
@@ -467,19 +348,7 @@
             },
             onUploadDone: (res) => {
                 var uploadedFile = res.filesUploaded[0];
-                /*
-                below is the response data
-                filename: "xvar.png"
-                handle: "CM3Vx4S2aaZBMnwcjdwg"
-                mimetype: "image/png"
-                originalFile: {name: "xvar.png", type: "image/png", size: 693926}
-                originalPath: "xvar.png"
-                size: 37017
-                source: "local_file_system"
-                status: "Stored"
-                uploadId: "f4be7cvt4K7AYguR"
-                url: "https://cdn.filestackcontent.com/CM3Vx4S2aaZBMnwcjdwg"
-                */
+
                 $('.preview').empty();
                 $('<img class="preview-image" src="' + uploadedFile.url + '"/>').appendTo('.preview');
                 $("[name='variantImageUrl']").val(uploadedFile.url);
@@ -551,7 +420,7 @@
                 dimensionTemp += '<p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>'+
                                         '<p>Contact us for custom sizes.</p>';
                 $('#size').empty().append(dimensionTemp);
-                
+
                 setFormValue();
                 populateStyles();
 
@@ -588,7 +457,6 @@
 						case '30x20cm':
 							wrapClass = 'mm300x200';
 							wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_300x200_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('90');
 
@@ -641,7 +509,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm300x200';
 										wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_300x200_Oak.png';
 
@@ -720,7 +588,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm600x400';
 										wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_600x400_Oak.png';
 
@@ -799,7 +667,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm900x600';
 										wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_900x600_Oak.png';
 
@@ -823,7 +691,7 @@
 							}
 						break;
 						/*Default: 120x80*/
-						default: 
+						default:
 							wrapClass = 'mm1200x800';
 							wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_1200x800_Oak.png';
 
@@ -879,7 +747,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm1200x800';
 										wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_1200x800_Oak.png';
 
@@ -903,7 +771,6 @@
 							}
 					}
 				}
-				
             break;
             case 'portrait':
 				/*Let's Check if there is any sizes seected*/
@@ -916,7 +783,6 @@
 						case '20x30cm':
 							wrapClass = 'mm200x300';
 							wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_200x300_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('90');
 
@@ -929,7 +795,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm200x300';
 										wrapFrame = forWardingAddress+'/images/portrait/Black/Frame_200x300_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -950,7 +815,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm200x300';
 										wrapFrame = forWardingAddress+'/images/portrait/White/Frame_200x300_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -969,7 +833,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm200x300';
 										wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_200x300_Oak.png';
 										if(getBorder()) {
@@ -994,7 +858,6 @@
 						case '40x60cm':
 							wrapClass = 'mm400x600';
 							wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_400x600_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('180');
 
@@ -1007,7 +870,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm400x600';
 										wrapFrame = forWardingAddress+'/images/portrait/Black/Frame_400x600_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1028,7 +890,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm400x600';
 										wrapFrame = forWardingAddress+'/images/portrait/White/Frame_400x600_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1047,7 +908,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm400x600';
 										wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_400x600_Oak.png';
 										if(getBorder()) {
@@ -1072,7 +933,6 @@
 						case '60x90cm':
 							wrapClass = 'mm600x900';
 							wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_600x900_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('280');
 
@@ -1085,7 +945,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm600x900';
 										wrapFrame = forWardingAddress+'/images/portrait/Black/Frame_600x900_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1106,7 +965,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm600x900';
 										wrapFrame = forWardingAddress+'/images/portrait/White/Frame_600x900_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1125,7 +983,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm600x900';
 										wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_600x900_Oak.png';
 										if(getBorder()) {
@@ -1151,7 +1009,6 @@
 						default:
 							wrapClass = 'mm800x1200';
 							wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_800x1200_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('550');
 
@@ -1164,7 +1021,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm800x1200';
 										wrapFrame = forWardingAddress+'/images/portrait/Black/Frame_800x1200_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1185,7 +1041,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm800x1200';
 										wrapFrame = forWardingAddress+'/images/portrait/White/Frame_800x1200_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1204,7 +1059,7 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm800x1200';
 										wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_800x1200_Oak.png';
 										if(getBorder()) {
@@ -1229,7 +1084,7 @@
 				}
             break;
 			/*Default: square*/
-            default: 
+            default:
 				/*Let's Check if there is any sizes seected*/
 				if(getSize()) {
 					/*
@@ -1240,7 +1095,6 @@
 						case '30x30cm':
 							wrapClass = 'mm300x300';
 							wrapFrame = forWardingAddress+'/images/square/Oak/Frame_300x300_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('90');
 
@@ -1253,7 +1107,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm300x300';
 										wrapFrame = forWardingAddress+'/images/square/Black/Frame_300x300_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1274,7 +1127,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm300x300';
 										wrapFrame = forWardingAddress+'/images/square/White/Frame_300x300_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1293,10 +1145,9 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm300x300';
 										wrapFrame = forWardingAddress+'/images/square/Oak/Frame_300x300_Oak.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1319,7 +1170,6 @@
 						case '90x90cm':
 							wrapClass = 'mm900x900';
 							wrapFrame = forWardingAddress+'/images/square/Oak/Frame_900x900_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('280');
 
@@ -1332,7 +1182,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm900x900';
 										wrapFrame = forWardingAddress+'/images/square/Black/Frame_900x900_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1353,7 +1202,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm900x900';
 										wrapFrame = forWardingAddress+'/images/square/White/Frame_900x900_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1372,10 +1220,9 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm900x900';
 										wrapFrame = forWardingAddress+'/images/square/Oak/Frame_900x900_Oak.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1399,7 +1246,6 @@
 						default:
 							wrapClass = 'mm600x600';
 							wrapFrame = forWardingAddress+'/images/square/Oak/Frame_600x600_Oak.png';
-							
 							setDescription('Printed, framed & delivered');
 							setPrice('180');
 
@@ -1412,7 +1258,6 @@
 									case 'black':
 										wrapClass = 'zoomed mm600x600';
 										wrapFrame = forWardingAddress+'/images/square/Black/Frame_600x600_Black.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1433,7 +1278,6 @@
 									case 'white':
 										wrapClass = 'zoomed mm600x600';
 										wrapFrame = forWardingAddress+'/images/square/White/Frame_600x600_White.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1452,10 +1296,9 @@
 										}
 									break;
 									/*Default: Natural*/
-									default: 
+									default:
 										wrapClass = 'zoomed mm600x600';
 										wrapFrame = forWardingAddress+'/images/square/Oak/Frame_600x600_Oak.png';
-										
 										if(getBorder()) {
 											/*
 											Load Border Style
@@ -1474,10 +1317,8 @@
 										}
 								}
 							}
-							
 					}
 				}
-				
 		}
 
         $('.preview').removeClass('zoomed mm300x200 mm600x400 mm900x600 mm1200x800 mm200x300 mm400x600 mm600x900 mm800x1200 mm300x300 mm600x600 mm900x900 mm300x300b mm200x300b mm300x200b mm300x200b mm600x400b mm900x600b mm1200x800b mm200x300b mm400x600b mm600x900b mm800x1200b mm900x900b mm600x600b').addClass(wrapClass);

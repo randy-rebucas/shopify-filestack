@@ -1,7 +1,12 @@
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 exports.getProducts = (req, res, next) => {
     req.shopifyToken.get('/admin/api/2019-04/products.json', function(err, data, headers){
         //res.json(data);
-        res.render('products', { 
+        res.render('products', {
             title: 'Products',
             products: data.products
         });
@@ -52,28 +57,32 @@ exports.createProduct = (req, res, next) => {
             }],
             "options": [{
                     "position": 1,
+                    "name": "Aspect"
+                },{
+                    "position": 2,
                     "name": "Size"
                 },
                 {
-                    "position": 2,
+                    "position": 3,
                     "name": "Frame"
                 },
                 {
-                    "position": 3,
+                    "position": 4,
                     "name": "Border"
                 }
             ],
             "variants": [{
-                "option1": variantSize, 
-                "option2": variantFrame, 
-                "option3": variantBorder, 
-                "price": productPrice, 
-                "sku": sku 
+                "option1": variantFormat,
+                "option2": variantSize,
+                "option3": capitalize(variantFrame),
+                "option4": variantBorder,
+                "price": productPrice,
+                "sku": sku
             }],
             "metafields": [
                 {
                   "key": "filestackId",
-                  "value": productImageUrl, 
+                  "value": productImageUrl,
                   "value_type": "string",
                   "namespace": "filestack"
                 }

@@ -1,0 +1,41 @@
+{% layout 'layout' %}
+
+<section>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+                <div class="float-right btn-group" role="group" aria-label="Basic example">
+                    <a href="/" class="btn btn-primary">Back</a>
+                    <a href="/products/create" class="btn btn-secondary">Create New</a>
+                </div>
+                <legend>Product List</legend>
+            {% if products.size > 0 %}
+                <ul class="list-unstyled"></ul>
+                    {% for product in products %}
+                    <li class="media">
+                        <img src="{{product.image.src}}" class="mr-3" alt="{{product.title}}">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{product.title}}</h5>
+                            {{product.body_html}}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-info">
+                    No Products Available | <a href="/products/create">Create New</a>
+                </div>
+            {% endif %}
+          </div>
+      </div>
+  </div>
+</section>
+{% block 'footer' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                Copyright @ 2019, sixt4
+            </div>
+        </div>
+    </div>
+{% endblock %}

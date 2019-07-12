@@ -6,12 +6,14 @@ const shopifyConnection = require('../middleware/shopify-api');
 const ProductController = require('../controllers/products');
 /* GET home page. */
 
-router.get('/create', function(req, res, next) {
-    res.render('products-create', {
-        title: 'Create Products',
-        urlHost: req.get('host'),
-        urlProtocol: req.protocol,
-        filestackAPI: process.env.FILESTACK_API
+router.get('/create', shopifyConnection, function(req, res, next) {
+    req.shopifyToken.get('/admin/api/2019-04/metafields.json', function(err, data, headers) {
+        res.render('products-create', {
+            title: 'Create Products',
+            urlHost: req.get('host'),
+            urlProtocol: req.protocol,
+            metafield: data.metafields
+        });
     });
 });
 
