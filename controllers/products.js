@@ -55,27 +55,24 @@ exports.createProduct = (req, res, next) => {
             "images": [{
                 "src": productImageUrl
             }],
-            "options": [{
+            "options": [
+                {
                     "position": 1,
-                    "name": "Aspect"
-                },{
-                    "position": 2,
                     "name": "Size"
                 },
                 {
-                    "position": 3,
+                    "position": 2,
                     "name": "Frame"
                 },
                 {
-                    "position": 4,
+                    "position": 3,
                     "name": "Border"
                 }
             ],
             "variants": [{
-                "option1": variantFormat,
-                "option2": variantSize,
-                "option3": capitalize(variantFrame),
-                "option4": variantBorder,
+                "option1": variantSize,
+                "option2": variantFrame,
+                "option3": variantBorder,
                 "price": productPrice,
                 "sku": sku
             }],
@@ -90,7 +87,7 @@ exports.createProduct = (req, res, next) => {
         }
     }
     req.shopifyToken.post('/admin/api/2019-04/products.json', post_data, function(err, data, headers) {
-        //res.json(data.product.variants);
+        //res.json(data.product);
         var varients = data.product.variants;
         //iterate all varients
         varients.forEach(function(item){
