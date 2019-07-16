@@ -25,6 +25,7 @@ app.set('port', port);
   key: fs.readFileSync('./cert/shopify.key'),
   cert: fs.readFileSync('./cert/shopify.cert')
 };*/
+
 /**
  * Create HTTP server.
  */
