@@ -4,11 +4,6 @@ const shopifyConnection = require('../middleware/shopify-api');
 
 const OrderController = require('../controllers/orders');
 /* GET order page. */
-/*var Handlebars     = require('handlebars');
-var HandlebarsIntl = require('handlebars-intl');
-HandlebarsIntl.registerWith(Handlebars);*/
-//var hbs = require('handlebars');
-//hbs.registerHelper('hbs-intl', require('handlebars-intl'));
 
 router.get('/', shopifyConnection, OrderController.getOrders);
 

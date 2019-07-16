@@ -12,7 +12,7 @@ router.get('/create', shopifyConnection, function(req, res, next) {
             title: 'Create Products',
             urlHost: req.get('host'),
             urlProtocol: req.protocol,
-            metafield: data.metafields
+            metafield: (data.metafields) ? data.metafields : 'AyttY1npLTImAmrYGmYOpz'
         });
     });
 });

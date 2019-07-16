@@ -1,8 +1,3 @@
-const capitalize = (s) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-}
-
 exports.getProducts = (req, res, next) => {
     req.shopifyToken.get('/admin/api/2019-04/products.json', function(err, data, headers){
         //res.json(data);
@@ -55,8 +50,7 @@ exports.createProduct = (req, res, next) => {
             "images": [{
                 "src": productImageUrl
             }],
-            "options": [
-                {
+            "options": [{
                     "position": 1,
                     "name": "Size"
                 },
@@ -87,7 +81,7 @@ exports.createProduct = (req, res, next) => {
         }
     }
     req.shopifyToken.post('/admin/api/2019-04/products.json', post_data, function(err, data, headers) {
-        //res.json(data.product);
+        //res.json(data.product.variants);
         var varients = data.product.variants;
         //iterate all varients
         varients.forEach(function(item){

@@ -8,9 +8,9 @@ module.exports = (req, res, next) => {
          * Read meta file for shop config
          */
         req.shopifyToken = new shopifyAPI({
-            shop: 'premit', // MYSHOP.myshopify.com
-            shopify_api_key: 'ac01c4b159eef8d1751ce21e02c33708', // Your API key
-            access_token: 'b3e4d0ca03facfb6c873ff7c68e850eb', // Your API password
+            shop: 'benmessina', // MYSHOP.myshopify.com
+            shopify_api_key: '13cd2e9b77be61944e72517e2bd9cf99', // Your API key
+            access_token: '480cd45438165a9b962b96db2c9e37ea', // Your API password
             verbose: false
         });
         next();

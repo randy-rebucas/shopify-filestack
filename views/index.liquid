@@ -4,39 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <!--<div class="float-right">
-                    <a class="btn btn-primary" href="/orders" role="button">Orders</a>
-                </div>-->
-                <legend>General Settings</legend>
-                <form action="/" method="post" id="productForm">
-                    {% assign hasMetafield = false %}
-                    {% if metafields %}
-                        {% assign hasMetafield = true %}
-                    {% endif %}
-                    {% for metafield in metafields %}
-                        {% if metafield.key == "filestackAPI" %}
-                            <input name="filestackId" type="hidden" value="{{metafield.id}}">
-                            <div class="form-group row">
-                                <label for="filestackAPI" class="col-sm-4 col-form-label">Filestack API</label>
-                                <div class="col-sm-8">
-                                    <input name="filestackAPI" type="text" class="form-control" id="filestackAPI" value="{{metafield.value}}">
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    <div class="form-group row">
-                        <div class="offset-md-4 col-sm-8">
-                        <button type="submit" class="btn btn-primary">
-                            {% if hasMetafield %}
-                                Update
-                            {% else %}
-                                Save
-                            {% endif %}
-                        </button>
-                        </div>
-                    </div>
-                </form>
-                <hr/>
+
 
                 <div>
                     <legend>Instruction</legend>

@@ -1,0 +1,10 @@
+ before_script:
+   - docker info
+
+ build_image:
+   tags:
+   - filestack
+   script:
+     - docker rm filestackapi -f ||true
+     - docker build -t filestackapi .
+     - docker run -d --name filestackapi -p 3000:3000 filestackapi
