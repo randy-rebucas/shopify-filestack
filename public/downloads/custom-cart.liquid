@@ -1,0 +1,126 @@
+<div class="cart-img">
+        <div class="preview">
+            <img class="preview-image" src="{{ item | img_url: '95x95', scale: 2 }}" alt="{{ item.title | escape }}" data-item-url="{{ item.url }}">
+            <style>
+          .cart__image-wrapper div {
+              display: block;
+              padding-right: unset;
+          }
+          .cart__image-wrapper div:hover, 
+          .cart__image-wrapper div:focus {
+              border-bottom: unset;
+          }
+          .cart-img {
+              position: relative;
+              width: 115px;
+              height: 115px;
+              text-indent: 0;
+          }
+          .preview {
+              position: relative;
+              width: 100%;
+              height: 100%;
+          }
+          .preview .preview-image, .preview .frame-image {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              -webkit-transform: translate(-50%, -50%);
+              -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+              max-width: 100%;
+              max-height: 100%;
+              transition: opacity 0.5s;
+              -webkit-backface-visibility: hidden;
+          }
+          .preview .preview-image {
+              max-height: 90%;
+          }
+
+          </style>
+          {% assign arr = item.sku | split: "-" %}
+          {% assign aspect = arr[0] %}
+          {% assign size = arr[1] %}
+          {% assign color = arr[2] %}
+          {% assign border = arr[3] %}
+
+          {% case aspect %}
+          {% comment %}
+              aspects = [P=Portrait, L=Landscape, S=Square]
+          {% endcomment %}
+          {% when 'P' %}
+              <!--portrait-->
+              {% case color %}
+              {% comment %}
+                  color = [WH=White, BL=Black, OA=Oak]
+              {% endcomment %}
+                  {% when 'WH' %}
+                      {% comment %}
+                          color = [WH=White Border, FU=Full Image]
+                      {% endcomment %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/portrait/White/Border/Frame_200x300_White_B.png">
+                      {% else %}
+                          {% comment %} no border {% endcomment %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/portrait/White/Frame_200x300_White.png">
+                      {% endif %}
+                  {% when 'BL' %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/portrait/Black/Border/Frame_200x300_Black_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/portrait/Black/Frame_200x300_Black.png">
+                      {% endif %}
+                  {% else %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/portrait/Oak/Border/Frame_200x300_Oak_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/portrait/Oak/Frame_200x300_Oak.png">
+                      {% endif %}
+              {% endcase %}
+          {% when 'L' %}
+              <!--landscape-->
+              {% case color %}
+                  {% when 'WH' %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/landscape/White/Border/Frame_300x200_White_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/landscape/White/Frame_300x200_White.png">
+                      {% endif %}
+                  {% when 'BL' %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/landscape/Black/Border/Frame_300x200_Black_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/landscape/Black/Frame_300x200_Black.png">
+                      {% endif %}
+                  {% else %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/landscape/Oak/Border/Frame_300x200_Oak_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/landscape/Oak/Frame_300x200_Oak.png">
+                      {% endif %}
+              {% endcase %}
+          {% else %}
+              <!--square-->
+              {% case color %}
+                  {% when 'WH' %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/square/White/Border/Frame_300x300_White_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/square/White/Frame_300x300_White.png">
+                      {% endif %}
+                  {% when 'BL' %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/square/Black/Border/Frame_300x300_Black_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/square/Black/Frame_300x300_Black.png">
+                      {% endif %}
+                  {% else %}
+                      {% if border == 'WH' %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/square/Oak/Border/Frame_300x300_Oak_B.png">
+                      {% else %}
+                          <img class="frame-image" src="//filestack.shopifyapi.com.au:3000/images/square/Oak/Frame_300x300_Oak.png">
+                      {% endif %}
+              {% endcase %}
+          {% endcase %}
+        </div>
+      </div>

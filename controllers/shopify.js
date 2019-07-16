@@ -8,7 +8,7 @@ const request = require('request-promise');
 
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
-const scopes = 'read_products, write_products';
+const scopes = 'read_products, write_products, read_orders, write_orders, read_themes, write_themes, read_script_tags, write_script_tags';
 const forwardingAddress = 'https://filestack.shopifyapi.com.au:3000'; // Replace this with your HTTPS Forwarding address
 
 exports.connect = (req, res) => {

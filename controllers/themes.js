@@ -41,3 +41,22 @@ exports.getThemeAssets = (req, res, next) => {
         console.log(data);
     });*/
 }
+
+exports.createConfig = (req, res, next) => {
+    var assetConfig = {
+        "asset": {
+            "key": "config/filestack_data.json",
+            "value": `{"key":"AJ4LGjGJKS4uws5q8QCraz"}`
+        }
+    }
+    req.shopifyToken.put('/admin/api/2019-07/themes/'+req.themeId+'/assets.json', assetConfig, function(err, data, headers) {
+        res.redirect('/');
+    });
+}
+
+exports.downloadFile = (req, res, next) => {
+    var file = req.params.file;
+    var fileLocation = './public/downloads/'+file;
+    console.log(fileLocation);
+    res.download(fileLocation, file);
+}

@@ -3,36 +3,97 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-
-
+            <div class="col-md-7">
                 <div>
-                    <legend>Instruction</legend>
-                    <ol>
-                        <li>
-                            <p>Create Snippets <code>products.filestack_source_fields.liquid</code> or <a href="/themes/create">Click here to create</a></p>
-                            <code>
-                                &lcub;&percnt; assign filestack = product.metafields.filestack &percnt;&rcub; <br/>
-                                &lcub;&percnt; assign key = 'filestackId' &percnt;&rcub; <br/>
-                                &lt;a href="&lcub;&lcub; filestack[key] &rcub;&rcub;" target="_blank"&gt;View source image&lt;&sol;a&gt;
-                            </code>
-                        </li>
-                        <li>
-                            <p>Insert the code below under product description on <code>section/product-template.liquid</code></p>
-                            <code>
-                                &lcub;&percnt; include 'products.filestack_source_fields' &percnt;&rcub;
-                            </code>
-                        </li>
-                    </ol>
+                    <legend>Checklist</legend>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">File</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Themes/Config/filestack_data.json</td>
+                                    <td class="text-center">
+                                        {% if filastackApi %} 
+                                            <i class="material-icons md-24">check</i> 
+                                        {% else %} 
+                                            <a href="/themes/config">Install</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Themes/Snippets/products.filestack_source_fields.liquid</td>
+                                    <td class="text-center">
+                                        {% if snippetFile %} 
+                                            <i class="material-icons md-24">check</i>
+                                        {% else %} 
+                                            <a href="/themes/create">Install</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <legend>Guides</legend>
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Insert the code
+                                        </button>
+                                    </h2>
+                                </div>
+                            
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <p>Insert the code below under product description on <code>section/product-template.liquid</code></p>
+                                        <code>
+                                            &lcub;&percnt; include 'products.filestack_source_fields' &percnt;&rcub;
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Update cart page
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        To add frames on cart product items download te file below and follow the intructions.
+                                        <a href="themes/download/custom-cart.liquid">Download</a>
+                                        <ol>
+                                            <li>Open Theme Editor</li>
+                                            <li>Find cart-template.liquid file under <code>Sections</code></li>
+                                            <li>Overwrite the code inside table cells <code>&lt;td class="cart__image-wrapper"&gt; your downloaded code here &lt;&frasl;td&gt;</code></li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
-            <div class="col-md-4 offset-md-2">
-                <!--<div class="alert alert-info">
+            <div class="col-md-4 offset-md-1">
+               <div class="alert alert-info">
                     <strong>NOTE:</strong><br/>
-                    This settings is important for filestack to work. And other configuration.
+                    This guides is important for filestack to work. And other configuration.
                 </div>
-
-                <div class="list-group">
+                <div class="card">
+                    <div class="card-header">
+                        Filestack API
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{filastackApi}}</h5>
+                        <!-- <a href="#" class="btn btn-primary">Edit</a> -->
+                    </div>
+                </div>
+                 <!--<div class="list-group">
                     <a href="/products" class="list-group-item list-group-item-action">Products</a>
                     <a href="/orders" class="list-group-item list-group-item-action">Orders</a>
                   </div>-->

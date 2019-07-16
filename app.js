@@ -1,16 +1,13 @@
-//var createError = require('http-errors');
+var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-/*const https = require("https");
-const fs = require("fs");
-const PORT = process.env.PORT || 3000;
-const http = require('http')*/
 var indexRouter = require('./routes/index');
 var shopifyRouter = require('./routes/shopify');
 var productsRouter = require('./routes/products');
 var ordersRouter = require('./routes/orders');
+var themesRouter = require('./routes/themes');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -39,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/shopify', shopifyRouter);
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
+app.use('/themes', themesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

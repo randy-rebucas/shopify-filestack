@@ -1,9 +1,35 @@
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 exports.getProducts = (req, res, next) => {
     req.shopifyToken.get('/admin/api/2019-04/products.json', function(err, data, headers){
         //res.json(data);
         res.render('products', {
             title: 'Products',
             products: data.products
+        });
+    });
+}
+
+exports.createForm = (req, res, next) => {
+    req.shopifyToken.get('/admin/themes/'+req.themeId+'/assets.json?asset[key]=config/filestack_data.json', function(err, data, headers) {
+        var apiKey = null;
+        if(!isEmpty(data)) {
+            // Object is empty (Would return true in this example)
+            var config = JSON.parse(data.asset.value);
+            var apiKey = config.key;
+        }
+
+        res.render('products-create', {
+            title: 'Create Products',
+            urlHost: req.get('host'),
+            urlProtocol: req.protocol,
+            filestackApi: apiKey
         });
     });
 }

@@ -2,20 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const shopifyConnection = require('../middleware/shopify-api');
+const themesData = require('../middleware/themes');
 
 const ProductController = require('../controllers/products');
 /* GET home page. */
 
-router.get('/create', shopifyConnection, function(req, res, next) {
-    req.shopifyToken.get('/admin/api/2019-04/metafields.json', function(err, data, headers) {
-        res.render('products-create', {
-            title: 'Create Products',
-            urlHost: req.get('host'),
-            urlProtocol: req.protocol,
-            metafield: (data.metafields) ? data.metafields : 'AyttY1npLTImAmrYGmYOpz'
-        });
-    });
-});
+router.get('/create', shopifyConnection, themesData, ProductController.createForm);
 
 router.get('/', shopifyConnection, ProductController.getProducts);
 
