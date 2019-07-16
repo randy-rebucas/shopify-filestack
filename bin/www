@@ -19,13 +19,15 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create https options.
  */
-var options = {
+/*var options = {
   key: fs.readFileSync('./cert/shopify.key'),
   cert: fs.readFileSync('./cert/shopify.cert')
-};
-
+};*/
+/**
+ * Create HTTP server.
+ */
 //var server = https.createServer(options, app);
 var server = http.createServer(app);
 
