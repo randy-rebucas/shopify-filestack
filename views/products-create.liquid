@@ -360,44 +360,44 @@
                     case 'landscape':
                         dimensionTemp += '<div class="form-group">'+
                                             '<div class="form-check form-check-inline">'+
-                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x20cm" value="30x20cm" checked>'+
-                                                '<label class="form-check-label" for="dimensions-30x20cm">30x20cm</label>'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-40x30cm" value="40x30cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-40x30cm">40x30cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
                                                 '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x40cm" value="60x40cm">'+
                                                 '<label class="form-check-label" for="dimensions-60x40cm">60x40cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
-                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x60cm" value="90x60cm">'+
-                                                '<label class="form-check-label" for="dimensions-90x60cm">90x60cm</label>'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-100x66cm" value="100x66cm">'+
+                                                '<label class="form-check-label" for="dimensions-100x66cm">100x66cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
                                                 '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-120x80cm" value="120x80cm">'+
                                                 '<label class="form-check-label" for="dimensions-120x80cm">120x80cm</label>'+
                                             '</div>'+
                                         '</div>';
-                        setSize('30x20cm');
+                        setSize('40x30cm');
                     break;
                     case 'portrait':
                         dimensionTemp += '<div class="form-group">'+
                                             '<div class="form-check form-check-inline">'+
-                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-20x30cm" value="20x30cm" checked>'+
-                                                '<label class="form-check-label" for="dimensions-20x30cm">20x30cm</label>'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-30x40cm" value="30x40cm" checked>'+
+                                                '<label class="form-check-label" for="dimensions-30x40cm">30x40cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
                                                 '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-40x60cm" value="40x60cm">'+
                                                 '<label class="form-check-label" for="dimensions-40x60cm">40x60cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
-                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x90cm" value="60x90cm">'+
-                                                '<label class="form-check-label" for="dimensions-60x90cm">60x90cm</label>'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-66x100cm" value="66x100cm">'+
+                                                '<label class="form-check-label" for="dimensions-66x100cm">66x100cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
                                                 '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-80x120cm" value="80x120cm">'+
                                                 '<label class="form-check-label" for="dimensions-80x120cm">80x120cm</label>'+
                                             '</div>'+
                                         '</div>';
-                        setSize('20x30cm');
+                        setSize('30x40cm');
                     break;
                     default: //square
                         dimensionTemp += '<div class="form-group">'+
@@ -406,8 +406,8 @@
                                                 '<label class="form-check-label" for="dimensions-30x30cm">30x30cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
-                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-60x60cm" value="60x60cm">'+
-                                                '<label class="form-check-label" for="dimensions-60x60cm">60x60cm</label>'+
+                                                '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-50x50cm" value="50x50cm">'+
+                                                '<label class="form-check-label" for="dimensions-50x50cm">50x50cm</label>'+
                                             '</div>'+
                                             '<div class="form-check form-check-inline">'+
                                                 '<input class="form-check-input" type="radio" name="dimensions" id="dimensions-90x90cm" value="90x90cm">'+
@@ -454,11 +454,11 @@
 					30x20cm/60x40cm/90x60cm/120x80
 					*/
 					switch(getSize()) {
-						case '30x20cm':
+						case '40x30cm':
 							wrapClass = 'mm300x200';
 							wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_300x200_Oak.png';
 							setDescription('Printed, framed & delivered');
-							setPrice('90');
+							setPrice('110');
 
 							if(getFrame()) {
 								/*
@@ -611,12 +611,12 @@
 								}
 							}
 						break;
-						case '90x60cm':
+						case '100x66cm':
 							wrapClass = 'mm900x600';
 							wrapFrame = forWardingAddress+'/images/landscape/Oak/Frame_900x600_Oak.png';
 
 							setDescription('Printed, framed & delivered');
-							setPrice('280');
+							setPrice('290');
 
 							if(getFrame()) {
 								/*
@@ -780,11 +780,11 @@
 					20x30cm/40x60cm/60x90cm/80x120
 					*/
 					switch(getSize()) {
-						case '20x30cm':
+						case '30x40cm':
 							wrapClass = 'mm200x300';
 							wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_200x300_Oak.png';
 							setDescription('Printed, framed & delivered');
-							setPrice('90');
+							setPrice('110');
 
 							if(getFrame()) {
 								/*
@@ -930,11 +930,11 @@
 								}
 							}
 						break;
-						case '60x90cm':
+						case '66x100cm':
 							wrapClass = 'mm600x900';
 							wrapFrame = forWardingAddress+'/images/portrait/Oak/Frame_600x900_Oak.png';
 							setDescription('Printed, framed & delivered');
-							setPrice('280');
+							setPrice('290');
 
 							if(getFrame()) {
 								/*
@@ -1096,7 +1096,7 @@
 							wrapClass = 'mm300x300';
 							wrapFrame = forWardingAddress+'/images/square/Oak/Frame_300x300_Oak.png';
 							setDescription('Printed, framed & delivered');
-							setPrice('90');
+							setPrice('110');
 
 							if(getFrame()) {
 								/*
@@ -1171,7 +1171,7 @@
 							wrapClass = 'mm900x900';
 							wrapFrame = forWardingAddress+'/images/square/Oak/Frame_900x900_Oak.png';
 							setDescription('Printed, framed & delivered');
-							setPrice('280');
+							setPrice('290');
 
 							if(getFrame()) {
 								/*

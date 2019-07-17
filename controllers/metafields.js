@@ -15,7 +15,6 @@ exports.getShop = (req, res, next) => {
         }
         req.shopifyToken.get('/admin/themes/'+req.themeId+'/assets.json?asset[key]=snippets/products.filestack_source_fields.liquid', function(err, snipetData, headers) {
             var snippetKey = false;
-            console.log(snipetData);
             if(!isEmpty(snipetData)) {
                 var snippetKey = true;
             }

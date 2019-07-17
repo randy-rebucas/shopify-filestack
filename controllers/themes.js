@@ -17,15 +17,10 @@ exports.createSnippet = (req, res, next) => {
         var assetSnippet = {
             "asset": {
                 "key": "snippets/products.filestack_source_fields.liquid",
-                "value": `
-                        <style>
-                            .product-metafield {
-                                padding: 0 0 1em 0;
-                            }
-                        </style>
+                "value": `<div style="padding: 0 0 1em 0;">
                         {% assign filestack = product.metafields.filestack %}
                         {% assign key = 'filestackId' %}
-                        <a href="{{ filestack[key] }}" target="_blank">View source image</a>`
+                        <a href="{{ filestack[key] }}" target="_blank">View source image</a></div>`
             }
         }
         req.shopifyToken.put('/admin/api/2019-07/themes/'+theme_id+'/assets.json', assetSnippet, function(err, data, headers) {

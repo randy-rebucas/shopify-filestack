@@ -122,10 +122,24 @@ exports.createProduct = (req, res, next) => {
             //update varient image
             req.shopifyToken.put('/admin/api/2019-04/variants/'+varId, varient_data, function(err, data, headers) {
                 //set cart redirection base on config store
-                const redirection = 'http://' + req.shopifyToken.config.shop + '.myshopify.com/cart/add?id='+item.id;
-                res.status(200).redirect(redirection);
+                var orderData = {
+                    "order": {
+                        "line_items": [
+                            {
+                                "variant_id": item.id,
+                                "quantity": 1
+                            }
+                        ],
+                        "note": "Open the link : " +productImageUrl
+                    }
+                }
+                req.shopifyToken.post('/admin/api/2019-04/orders.json', orderData, function(err, orderdata, headers) {
+                    res.redirect('orders/'+orderdata.order.id);
+                });
+                //const redirection = 'http://' + req.shopifyToken.config.shop + '.myshopify.com/cart/add?id='+item.id;
+                //res.status(200).redirect(redirection);
             });
-            
+
         });
 
     });

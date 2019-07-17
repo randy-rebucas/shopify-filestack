@@ -8,6 +8,7 @@ var shopifyRouter = require('./routes/shopify');
 var productsRouter = require('./routes/products');
 var ordersRouter = require('./routes/orders');
 var themesRouter = require('./routes/themes');
+var successRouter = require('./routes/success');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -37,6 +38,7 @@ app.use('/shopify', shopifyRouter);
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
 app.use('/themes', themesRouter);
+app.use('/success', successRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
