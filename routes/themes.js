@@ -5,11 +5,11 @@ const themesData = require('../middleware/themes');
 
 const ThemesController = require('../controllers/themes');
 /* GET order page. */
-router.get('/', shopifyConnection, ThemesController.getTheme);
+router.get('/', shopifyConnection, themesData, ThemesController.getTheme);
 
-router.get('/create', shopifyConnection, ThemesController.createSnippet);
+router.get('/create', shopifyConnection, themesData, ThemesController.createSnippet);
 
-router.get('/assets', shopifyConnection, ThemesController.getThemeAssets);
+router.get('/assets', shopifyConnection, themesData, ThemesController.getThemeAssets);
 
 router.get('/config', shopifyConnection, themesData, ThemesController.createConfig);
 

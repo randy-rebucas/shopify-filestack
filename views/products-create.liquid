@@ -8,10 +8,7 @@
   <div class="container">
       <div class="row">
           <div class="col-md-12">
-                <!-- <div class="float-right btn-group" role="group" aria-label="Basic example">
-                    <a href="/" class="btn btn-primary">Home</a>
-                    <a href="/products" class="btn btn-secondary">Products</a>
-                </div> -->
+
                 <ul class="nav nav-pills nav-fill" id="variants" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="format-tab" data-toggle="tab" href="#format" role="tab" aria-controls="format" aria-selected="true">Format</a>
@@ -84,14 +81,7 @@
     <!-- Content here -->
   </div>
 </section>
-{% assign filestackAPI = null %}
-{% if metafield %}
-    {% for mf in metafield %}
-        {% if mf.key == "filestackAPI" %}
-            {% assign filestackAPI = mf.value %}
-        {% endif %}
-    {% endfor %}
-{% endif %}
+
 <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script>

@@ -1,13 +1,8 @@
-function isEmpty(obj) {
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}
-
 exports.getProducts = (req, res, next) => {
     req.shopifyToken.get('/admin/api/2019-04/products.json', function(err, data, headers) {
+        if (err) {
+            res.sendStatus(500).json(err)
+        }
         //res.json(data);
         res.render('products', {
             title: 'Products',
@@ -18,8 +13,11 @@ exports.getProducts = (req, res, next) => {
 
 exports.createForm = (req, res, next) => {
     req.shopifyToken.get('/admin/themes/' + req.themeId + '/assets.json?asset[key]=config/filestack_data.json', function(err, data, headers) {
+        if (err) {
+            res.sendStatus(500).json(err)
+        }
         var apiKey = null;
-        if (!isEmpty(data)) {
+        if (Object.keys(data).length) {
             // Object is empty (Would return true in this example)
             var config = JSON.parse(data.asset.value);
             var apiKey = config.key;
@@ -34,50 +32,13 @@ exports.createForm = (req, res, next) => {
     });
 }
 
-exports.createOrder = (req, res, next) => {
-
-    var orderData = {
-        "order": {
-            "line_items": [{
-                "variant_id": item.id,
-                "quantity": 1
-            }],
-            "note": "Open the link provided below for source image.",
-            "note_attributes": [{
-                "name": "Filestack source",
-                "value": productImageUrl
-            }],
-            "fulfillment_status": null,
-            "financial_status": "authorized"
-                //"send_receipt": true,
-                //"send_fulfillment_receipt": true,
-                //"processing_method": "manual",
-                //"source_name": "web",
-                //"tags": "custom-frames, frames",
-                //"gateway": "shopify_payments",
-                //"referring_site": req.get('host'),
-                //"browser_ip": req.header('x-forwarded-for') || req.connection.remoteAddress,
-                //"taxes_included": true
-        }
-    }
-    req.shopifyToken.post('/admin/api/2019-04/orders.json', orderData, function(err, orderdata, headers) {
-        try {
-            console.log(orderData);
-            res.redirect('orders/' + orderdata.order.id);
-        } catch (error) {
-            res.status(500);
-            res.render('error');
-        }
-
-    });
-}
-
 exports.createProduct = (req, res, next) => {
-    //P,L,S         {aspects}
-    //30X20         {size}
-    //NA,BL,WH      {frame}
-    //FI,WB         {border}
     /**
+     * P,L,S         {aspects}
+     * 30X20         {size}
+     * NA,BL,WH      {frame}
+     * FI,WB         {border}
+     *
      * Sample SKU
      * P-30X20-NA-FI
      * {aspects}-{size}-{frame}-{border}
@@ -104,13 +65,6 @@ exports.createProduct = (req, res, next) => {
             "body_html": productDescription,
             "vendor": "benmessina", //use active user
             "product_type": "Custom Frame",
-            //"metafields_global_title_tag": variantFormat,
-            //"metafields_global_description_tag": productDescription,
-            //"tags": "custom-frames, sizes, borders",
-            //"published": true,
-            //"created_at": new Date().toISOString(),
-            //"fulfillment_service": "manual",
-            //"requires_shipping": false,
             "images": [{
                 "src": productImageUrl
             }],
@@ -143,6 +97,9 @@ exports.createProduct = (req, res, next) => {
         }
     }
     req.shopifyToken.post('/admin/api/2019-04/products.json', post_data, function(err, data, headers) {
+        if (err) {
+            res.sendStatus(500).json(err)
+        }
         //res.json(data.product.variants);
         var varients = data.product.variants;
         //iterate all varients
@@ -158,7 +115,9 @@ exports.createProduct = (req, res, next) => {
             //update varient image
             req.shopifyToken.put('/admin/api/2019-04/variants/' + varId, varient_data, function(err, data, headers) {
                 //set cart redirection base on config store
-
+                if (err) {
+                    res.sendStatus(500).json(err)
+                }
                 var orderData = {
                     "order": {
                         "line_items": [{
@@ -171,21 +130,27 @@ exports.createProduct = (req, res, next) => {
                             "value": productImageUrl
                         }],
                         "fulfillment_status": null
-
-                        //"send_receipt": true,
-                        //"send_fulfillment_receipt": true,
-                        //"processing_method": "manual",
-                        //"source_name": "web",
-                        //"tags": "custom-frames, frames",
-                        //"gateway": "shopify_payments",
-                        //"referring_site": req.get('host'),
-                        //"browser_ip": req.header('x-forwarded-for') || req.connection.remoteAddress,
-                        //"taxes_included": true
                     }
                 }
 
                 req.shopifyToken.post('/admin/api/2019-04/orders.json', orderData, function(err, response, headers) {
-                    res.redirect('orders/' + response.order.id);
+                    if (err) {
+                        res.sendStatus(500).json(err)
+                    }
+res.redirect('orders/' + response.order.id);
+                    /*var transactionData = {
+                        "transaction": {
+                            "kind": "authorization",
+                            "parent_id": response.order.id
+                        }
+                    }
+                    req.shopifyToken.post('/admin/api/2019-04/orders.json', transactionData, function(err, transresponse, headers) {
+                        if (err) {
+                            res.sendStatus(500).json(err)
+                        }
+                        console.log(transresponse);
+                        //res.redirect('orders/' + transresponse.order.id);
+                    });*/
                 });
 
                 //const redirection = 'http://' + req.shopifyToken.config.shop + '.myshopify.com/cart/add?id='+item.id;

@@ -28,7 +28,7 @@ exports.getOrder = (req, res, next) => {
 }
 
 exports.updateOrder = (req, res, next) => {
-    console.log(req.body);
+    //console.log(req.body);
 
     var orderData = {
         "order": {
@@ -65,8 +65,11 @@ exports.updateOrder = (req, res, next) => {
 
     var orderId = req.body.orderId + '.json';
 
-    req.shopifyToken.put('/admin/api/2019-07/orders/' + orderId, orderData, function(err, data, headers) {
+    req.shopifyToken.put('/admin/api/2019-07/orders/' + orderId, orderData, function(err, response, headers) {
+        if (err) {
+            res.sendStatus(500).json(err)
+        }
         res.redirect('success');
-        //res.redirect('products/create');
     });
+
 }
