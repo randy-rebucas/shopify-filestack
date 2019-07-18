@@ -19,7 +19,7 @@
                             <input type="text" name="contact_number" class="form-control" id="contact_number" placeholder="Enter phone number">
                             <small id="numberHelp" class="form-text text-muted">We'll never share your contact with anyone else.</small>
                         </div>
-                    <legend>Customer Details</legend>
+                    <!--<legend>Customer Details</legend>
                         <div class="form-row">
                             <div class="col">
                                 <label for="cus_firstname">First name</label>
@@ -34,7 +34,7 @@
                             <label for="cus_email">Email</label>
                             <input type="email" name="cus_email" class="form-control" id="cus_email" placeholder="Email">
                         </div>
-                    
+                    -->
                     <legend>Shipping Address</legend>
                         <div class="form-row">
                             <div class="col">
@@ -51,6 +51,10 @@
                             <input type="text" name="shipping_address" class="form-control" id="shipping_address" placeholder="Address">
                         </div>
                         <div class="form-group">
+                            <label for="shipping_address_optional">Address 2</label>
+                            <input type="text" name="shipping_address_optional" class="form-control" id="shipping_address_optional" placeholder="Address">
+                        </div>
+                        <div class="form-group">
                             <label for="shipping_city">City</label>
                             <input type="text" name="shipping_city" class="form-control" id="shipping_city" placeholder="City">
                         </div>
@@ -62,36 +66,6 @@
                             <div class="col">
                                 <label for="shipping_postal_code">Postal code</label>
                                 <input type="text" name="shipping_postal_code" class="form-control" placeholder="Postal code">
-                            </div>
-                        </div>
-                        <!--add radio option for same shapping / use different billing address-->
-                    <legend>Billing Address</legend>
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="billing_firstname">First name</label>
-                                <input type="text" name="billing_firstname" class="form-control" placeholder="John">
-                            </div>
-                            <div class="col">
-                                <label for="billing_lastname">Last name</label>
-                                <input type="text" name="billing_lastname" class="form-control" placeholder="Doe">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="billing_address">Address</label>
-                            <input type="text" name="billing_address" class="form-control" id="billing_address" placeholder="Address">
-                        </div>
-                        <div class="form-group">
-                            <label for="billing_city">City</label>
-                            <input type="text" name="billing_city" class="form-control" id="billing_city" placeholder="City">
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="billing_country">Country</label>
-                                <input type="text" name="billing_country" class="form-control" placeholder="Country">
-                            </div>
-                            <div class="col">
-                                <label for="billing_postal_code">Postal code</label>
-                                <input type="text" name="billing_postal_code" class="form-control" placeholder="Postal code">
                             </div>
                         </div>
                         <br/>
