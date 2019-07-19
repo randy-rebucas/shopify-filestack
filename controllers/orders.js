@@ -1,5 +1,10 @@
 exports.getOrders = (req, res, next) => {
     req.shopifyToken.get('/admin/api/2019-04/orders.json', function(err, data, headers) {
+        if (err) {
+            //res.sendStatus(500).json(err)
+            res.sendStatus(err.status || 500);
+            res.render('error');
+        }
         res.render('orders', {
             title: 'Orders',
             orders: data.orders
@@ -9,18 +14,27 @@ exports.getOrders = (req, res, next) => {
 
 exports.getOrder = (req, res, next) => {
     var orderJasonFile = req.params.orderId + '.json';
-    req.shopifyToken.get(encodeURI('/admin/api/2019-04/orders/' + orderJasonFile), function(err, orderData, headers) {
-        pageTitle = 'Order ' + orderData.order.name;
-        var orders = orderData.order.line_items;
-        for (let o = 0; o < orders.length; o++) {
-            //orders
-            req.shopifyToken.get('/admin/products/' + orders[o].product_id + '/metafields.json', function(err, metaData, headers) {
-                var metafields = metaData.metafields;
-                for (let m = 0; m < metafields.length; m++) {
-                    res.render('order-detail', { title: 'Order', 'page_title': pageTitle, 'o': orderData, 'm': metafields[m].value });
-                }
-            });
+    req.shopifyToken.get(encodeURI('/admin/api/2019-07/orders/' + orderJasonFile), function(err, orderData, headers) {
+        if (err) {
+            //res.sendStatus(500).json(err)
+            res.sendStatus(err.status || 500);
+            res.render('error');
         }
+
+        /*req.shopifyToken.get('/admin/api/2019-07/products/'+orderData.order.line_items.product_id+'/images.json', function(err, imageData, headers) {
+            imageData.forEach(function(key, index, originalObject) {
+                var val = o[key];
+            });
+        });
+        console.log(orderData.order.line_items);*/
+        pageTitle = 'Order ' + orderData.order.name;
+
+        res.render('order-detail', {
+            title: 'Order',
+            page_title: pageTitle,
+            data: orderData
+        });
+        
     });
 }
 

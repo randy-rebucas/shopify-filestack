@@ -1,4 +1,16 @@
 {% layout 'layout' %}
+<style>
+section table tbody tr:last-child td:first-child {
+    font-size: 20px;
+    font-weight: 500;
+}
+section table tbody tr:last-child td:last-child {
+    font-size: 30px;
+}
+section table tbody tr:last-child td:last-child span {
+    font-size: 16px;
+}
+</style>
 <section>
     <div class="container">
         <div class="row">
@@ -7,7 +19,7 @@
                 <!-- {{o.order.name}} -->
                 <!-- {{m}} -->
                 <form method="post" action="/orders">
-                    <input type="hidden" name="orderId" value="{{o.order.id}}"/>
+                    <input type="hidden" name="orderId" value="{{data.order.id}}"/>
                     <legend>Contact Information</legend>
                         <div class="form-group">
                             <label for="contact_email">Email</label>
@@ -56,8 +68,40 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
-            <div class="col-md-4 offset-md-1">
-                Product Details
+            <div class="col-md-5">
+                <legend>Order Details</legend> 
+                <table class="table">
+                    <tbody>
+                        {% for items in data.order.line_items %}
+                        <tr>
+                            <td>
+                                {{ items.title }}<br/>
+                                {{ items.variant_title }}
+                            </td>
+                            <td class="text-right">{% if items.price_set.shop_money.currency_code == 'AUD' %}${% endif %}{{ items.price }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>Subtotal</td>
+                            <td class="text-right">{% if data.order.currency == 'AUD' %}${% endif %}{{data.order.subtotal_price_set.presentment_money.amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Discount</td>
+                            <td class="text-right">{% if data.order.currency == 'AUD' %}${% endif %}{{data.order.total_discounts_set.presentment_money.amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Shipping</td>
+                            <td class="text-right">{% if data.order.currency == 'AUD' %}${% endif %}{{data.order.total_shipping_price_set.presentment_money.amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td class="text-right">
+                                <span>{{data.order.total_price_set.presentment_money.currency_code}}</span>
+                                {% if data.order.currency == 'AUD' %}${% endif %}{{data.order.total_price_set.presentment_money.amount}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
