@@ -4,15 +4,15 @@ const shopifyConnection = require('../middleware/shopify-api');
 const themesData = require('../middleware/themes');
 
 const ThemesController = require('../controllers/themes');
-/* GET order page. */
+const ShareableCommon = require('../common/shareable');
+
+/**
+ *  Get themes
+ */
 router.get('/', shopifyConnection, themesData, ThemesController.getTheme);
-
-router.get('/create', shopifyConnection, themesData, ThemesController.createSnippet);
-
-router.get('/assets', shopifyConnection, themesData, ThemesController.getThemeAssets);
-
-router.get('/config', shopifyConnection, themesData, ThemesController.createConfig);
-
-router.get('/download/:file(*)', ThemesController.downloadFile);
+/**
+ *  Download
+ */
+router.get('/download/:file(*)', ShareableCommon.downloadFile);
 
 module.exports = router;

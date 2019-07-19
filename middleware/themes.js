@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
                 theme_id = item.id;
             });
             req.themeId = theme_id;
-            next();// No need to return anything.
+            next();
         });
     } catch (error) {
         res.status(401).json({ message: 'Shopify configuration not set!' });

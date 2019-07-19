@@ -1,5 +1,5 @@
 body {
-    /*background: #e2e2e2;*/
+    background: #e2e2e2;
 }
 section {
     padding: 2em;
@@ -9,6 +9,20 @@ section {
 }
 li.media img {
     width: 5%;
+}
+.hide {
+    display: none;
+}
+.table {
+    background: lightgrey;
+}
+.card-header span {
+    float: right;
+    visibility: hidden;
+    cursor: pointer;
+}
+.card-header:hover span {
+    visibility: visible;
 }
 footer {
     position: fixed;
@@ -24,6 +38,16 @@ nav.navbar {
 }
 .nav-fill .nav-item a:not(.active) {
     color: #b1b1b1;
+}
+section table tbody tr:last-child td:first-child {
+    font-size: 20px;
+    font-weight: 500;
+}
+section table tbody tr:last-child td:last-child {
+    font-size: 30px;
+}
+section table tbody tr:last-child td:last-child span {
+    font-size: 16px;
 }
 /**/
 section#create-framed-product .container .row:last-child div {

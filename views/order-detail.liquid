@@ -1,23 +1,9 @@
 {% layout 'layout' %}
-<style>
-section table tbody tr:last-child td:first-child {
-    font-size: 20px;
-    font-weight: 500;
-}
-section table tbody tr:last-child td:last-child {
-    font-size: 30px;
-}
-section table tbody tr:last-child td:last-child span {
-    font-size: 16px;
-}
-</style>
 <section>
     <div class="container">
         <div class="row">
             <div class="col-md-7">
                 <h2>{{page_title}}</h2>
-                <!-- {{o.order.name}} -->
-                <!-- {{m}} -->
                 <form method="post" action="/orders">
                     <input type="hidden" name="orderId" value="{{data.order.id}}"/>
                     <legend>Contact Information</legend>
@@ -69,7 +55,7 @@ section table tbody tr:last-child td:last-child span {
                 </form>
             </div>
             <div class="col-md-5">
-                <legend>Order Details</legend> 
+                <legend>Order Details</legend>
                 <table class="table">
                     <tbody>
                         {% for items in data.order.line_items %}

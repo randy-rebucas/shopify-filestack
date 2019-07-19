@@ -3,7 +3,6 @@ exports.getProducts = (req, res, next) => {
         if (err) {
             res.sendStatus(500).json(err)
         }
-        //res.json(data);
         res.render('products', {
             title: 'Products',
             products: data.products
@@ -11,24 +10,26 @@ exports.getProducts = (req, res, next) => {
     });
 }
 
-exports.createForm = (req, res, next) => {
-    req.shopifyToken.get('/admin/themes/' + req.themeId + '/assets.json?asset[key]=config/filestack_data.json', function(err, data, headers) {
+exports.getProduct = (req, res, next) => {
+    var productJasonFile = req.params.productId + '.json';
+    req.shopifyToken.get(encodeURI('/admin/api/2019-07/products/' + productJasonFile), function(err, productData, headers) {
         if (err) {
-            res.sendStatus(500).json(err)
+            res.sendStatus(err.status || 500);
+            res.render('error');
         }
-        var apiKey = null;
-        if (Object.keys(data).length) {
-            // Object is empty (Would return true in this example)
-            var config = JSON.parse(data.asset.value);
-            var apiKey = config.key;
-        }
-
-        res.render('products-create', {
-            title: 'Create Products',
-            urlHost: req.get('host'),
-            urlProtocol: req.protocol,
-            filestackApi: apiKey
+        res.render('product-detail', {
+            title: 'Product',
+            data: productData
         });
+    });
+}
+
+exports.createForm = (req, res, next) => {
+    res.render('products-create', {
+        title: 'Create Products',
+        urlHost: req.get('host'),
+        urlProtocol: req.protocol,
+        filestackApi: req.filestackApi
     });
 }
 
@@ -61,9 +62,9 @@ exports.createProduct = (req, res, next) => {
 
     var post_data = {
         "product": {
-            "title": 'Online Print and Frame', //variantFormat,
+            "title": 'Online Print and Frame',
             "body_html": productDescription,
-            "vendor": "benmessina", //use active user
+            "vendor": "benmessina",
             "product_type": "Custom Frame",
             "images": [{
                 "src": productImageUrl
@@ -108,7 +109,8 @@ exports.createProduct = (req, res, next) => {
             var varId = item.id + '.json';
             req.shopifyToken.put('/admin/api/2019-04/variants/' + varId, varient_data, function(err, data, headers) {
                 if (err) {
-                    res.sendStatus(500).json(err)
+                    res.sendStatus(err.status || 500);
+                    res.render('error');
                 }
                 var orderData = {
                     "order": {
@@ -128,7 +130,6 @@ exports.createProduct = (req, res, next) => {
 
                 req.shopifyToken.post('/admin/api/2019-04/orders.json', orderData, function(err, response, headers) {
                     if (err) {
-                        //res.sendStatus(500).json(err)
                         res.sendStatus(err.status || 500);
                         res.render('error');
                     }
@@ -137,28 +138,5 @@ exports.createProduct = (req, res, next) => {
                 });
             });
         });
-    });
-}
-
-exports.updateProduct = (req, res, next) => {
-    var put_data = {
-        "product": {
-            "body_html": "<strong>Updated!</strong>"
-        }
-    }
-
-    var prodId = req.params + '.json';
-
-    req.shopifyToken.put('/admin/api/2019-04/products/' + prodId, put_data, function(err, data, headers) {
-        console.log(data);
-    });
-}
-
-exports.deleteProduct = (req, res, next) => {
-
-    var prodId = req.params + '.json';
-
-    req.shopifyToken.delete('/admin/api/2019-04/products/' + prodId, function(err, data, headers) {
-        console.log(data);
     });
 }
