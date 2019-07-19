@@ -21,15 +21,16 @@ exports.getShop = (req, res, next) => {
 
 exports.createMetafield = (req, res, next) => {
     var val = req.body;
-    var metafileds_data = {
-        "metafield": {
-            "namespace": "fs_api",
-            "key": "filestackAPI",
-            "value": val.filestackAPI,
-            "value_type": "string"
-        }
-    }
-    req.shopifyToken.post('/admin/api/2019-04/metafields.json', metafileds_data, function(err, data, headers) {
-        res.redirect('/');
-    });
+    console.log(val);
+    // var metafileds_data = {
+    //     "metafield": {
+    //         "namespace": "fs_api",
+    //         "key": "filestackAPI",
+    //         "value": val.filestackAPI,
+    //         "value_type": "string"
+    //     }
+    // }
+    // req.shopifyToken.post('/admin/api/2019-04/metafields.json', metafileds_data, function(err, data, headers) {
+    //     res.redirect('/');
+    // });
 }

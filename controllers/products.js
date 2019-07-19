@@ -87,12 +87,6 @@ exports.createProduct = (req, res, next) => {
                 "option3": variantBorder,
                 "price": productPrice,
                 "sku": sku
-            }],
-            "metafields": [{
-                "key": "filestackId",
-                "value": productImageUrl,
-                "value_type": "string",
-                "namespace": "filestack"
             }]
         }
     }
@@ -112,9 +106,7 @@ exports.createProduct = (req, res, next) => {
                 }
             }
             var varId = item.id + '.json';
-            //update varient image
             req.shopifyToken.put('/admin/api/2019-04/variants/' + varId, varient_data, function(err, data, headers) {
-                //set cart redirection base on config store
                 if (err) {
                     res.sendStatus(500).json(err)
                 }
@@ -129,36 +121,22 @@ exports.createProduct = (req, res, next) => {
                             "name": "Filestack source",
                             "value": productImageUrl
                         }],
-                        "fulfillment_status": null
+                        "fulfillment_status": null,
+                        "financial_status": "pending"
                     }
                 }
 
                 req.shopifyToken.post('/admin/api/2019-04/orders.json', orderData, function(err, response, headers) {
                     if (err) {
-                        res.sendStatus(500).json(err)
+                        //res.sendStatus(500).json(err)
+                        res.sendStatus(err.status || 500);
+                        res.render('error');
                     }
-res.redirect('orders/' + response.order.id);
-                    /*var transactionData = {
-                        "transaction": {
-                            "kind": "authorization",
-                            "parent_id": response.order.id
-                        }
-                    }
-                    req.shopifyToken.post('/admin/api/2019-04/orders.json', transactionData, function(err, transresponse, headers) {
-                        if (err) {
-                            res.sendStatus(500).json(err)
-                        }
-                        console.log(transresponse);
-                        //res.redirect('orders/' + transresponse.order.id);
-                    });*/
+                    res.redirect('orders/' + response.order.id);
+
                 });
-
-                //const redirection = 'http://' + req.shopifyToken.config.shop + '.myshopify.com/cart/add?id='+item.id;
-                //res.status(200).redirect(redirection);
             });
-
         });
-
     });
 }
 

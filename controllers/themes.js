@@ -26,14 +26,19 @@ exports.getThemeAssets = (req, res, next) => {
 }
 
 exports.createConfig = (req, res, next) => {
-    var assetConfig = {
-        "asset": {
-            "key": "config/filestack_data.json",
-            "value": `{"key":"AJ4LGjGJKS4uws5q8QCraz"}`
+    
+    req.shopifyToken.delete('/admin/api/2019-07/themes/'+req.themeId+'/assets.json?asset[key]=config/filestack_data.json', function(err, configData, headers) {
+        var assetConfig = {
+            "asset": {
+                "key": "config/filestack_data.json",
+                "value": `{
+                    "key": "${req.body.fs_API}"
+                }`
+            }
         }
-    }
-    req.shopifyToken.put('/admin/api/2019-07/themes/'+req.themeId+'/assets.json', assetConfig, function(err, data, headers) {
-        res.redirect('/');
+        req.shopifyToken.put('/admin/api/2019-07/themes/'+req.themeId+'/assets.json', assetConfig, function(err, data, headers) {
+            res.redirect('/');
+        });
     });
 }
 

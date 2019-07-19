@@ -1,5 +1,17 @@
 {% layout 'layout' %}
-
+<style>
+.hide {
+    display: none;
+}
+.card-header span {
+    float: right;
+    visibility: hidden;
+    cursor: pointer;
+}
+.card-header:hover span {
+    visibility: visible;
+}
+</style>
 <section>
     <div class="container">
         <div class="row">
@@ -20,63 +32,13 @@
                                         {% if filastackApi %} 
                                             <i class="material-icons md-24">check</i> 
                                         {% else %} 
-                                            <a href="/themes/config">Install</a>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Themes/Snippets/products.filestack_source_fields.liquid</td>
-                                    <td class="text-center">
-                                        {% if snippetFile %} 
-                                            <i class="material-icons md-24">check</i>
-                                        {% else %} 
-                                            <a href="/themes/create">Install</a>
+                                            Not Found
                                         {% endif %}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    <legend>Guides</legend>
-                        <div class="accordion" id="accordionExample">
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Insert the code
-                                        </button>
-                                    </h2>
-                                </div>
-                            
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <p>Insert the code below under product description on <code>section/product-template.liquid</code></p>
-                                        <code>
-                                            &lcub;&percnt; include 'products.filestack_source_fields' &percnt;&rcub;
-                                        </code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Update cart page
-                                        </button>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        To add frames on cart product items download te file below and follow the intructions.
-                                        <a href="themes/download/custom-cart.liquid">Download</a>
-                                        <ol>
-                                            <li>Open Theme Editor</li>
-                                            <li>Find cart-template.liquid file under <code>Sections</code></li>
-                                            <li>Overwrite the code inside table cells <code>&lt;td class="cart__image-wrapper"&gt; your downloaded code here &lt;&frasl;td&gt;</code></li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    
                 </div>
             </div>
             <div class="col-md-4 offset-md-1">
@@ -87,10 +49,25 @@
                 <div class="card">
                     <div class="card-header">
                         Filestack API
+                        <span id="edit_API"><i class="material-icons md-18">edit</i> </span>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{filastackApi}}</h5>
-                        <!-- <a href="#" class="btn btn-primary">Edit</a> -->
+                        <h5 class="card-title">
+                            {% if filastackApi %} 
+                                {{filastackApi}}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </h5>
+                        
+                        <form action="/" method="post" id="frmApi" class="hide">
+                            <hr/>
+                            <div class="form-group">
+                                <input class="form-control" name="fs_API" value="" required/>
+                            </div>
+                            <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
                     </div>
                 </div>
                  <!--<div class="list-group">
@@ -102,6 +79,19 @@
     </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        $('#edit_API').click(function() {
+            $('#frmApi').toggleClass('hide');
+            $(this).addClass('hide');
+        });
+        $('#cancel').click(function() {
+            $('#frmApi').toggleClass('hide');
+            $('#edit_API').removeClass('hide');
+        });
+        // 
+    });
+</script>
 {% block 'footer' %}
     <div class="container">
         <div class="row">

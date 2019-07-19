@@ -1,6 +1,5 @@
 exports.getOrders = (req, res, next) => {
     req.shopifyToken.get('/admin/api/2019-04/orders.json', function(err, data, headers) {
-        //res.json(data);
         res.render('orders', {
             title: 'Orders',
             orders: data.orders
@@ -11,8 +10,6 @@ exports.getOrders = (req, res, next) => {
 exports.getOrder = (req, res, next) => {
     var orderJasonFile = req.params.orderId + '.json';
     req.shopifyToken.get(encodeURI('/admin/api/2019-04/orders/' + orderJasonFile), function(err, orderData, headers) {
-        //set variable to hold order
-        //res.json(orderData.order.name);
         pageTitle = 'Order ' + orderData.order.name;
         var orders = orderData.order.line_items;
         for (let o = 0; o < orders.length; o++) {
@@ -28,8 +25,6 @@ exports.getOrder = (req, res, next) => {
 }
 
 exports.updateOrder = (req, res, next) => {
-    //console.log(req.body);
-
     var orderData = {
         "order": {
             "email": req.body.contact_email,
@@ -55,11 +50,7 @@ exports.updateOrder = (req, res, next) => {
             "processing_method": "manual",
             "source_name": "web",
             "tags": "custom-frames, frames",
-            "gateway": "shopify_payments",
-            "taxes_included": true,
-            "financial_status": "pending",
-            "referring_site": req.get('host'),
-            "browser_ip": req.header('x-forwarded-for') || req.connection.remoteAddress
+            "gateway": "shopify_payments"
         }
     }
 
@@ -67,7 +58,9 @@ exports.updateOrder = (req, res, next) => {
 
     req.shopifyToken.put('/admin/api/2019-07/orders/' + orderId, orderData, function(err, response, headers) {
         if (err) {
-            res.sendStatus(500).json(err)
+            //res.sendStatus(500).json(err)
+            res.sendStatus(err.status || 500);
+            res.render('error');
         }
         res.redirect('success');
     });

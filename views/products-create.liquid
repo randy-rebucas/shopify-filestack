@@ -67,7 +67,7 @@
                     <input type="hidden" name="variantBorder" value=""/>
                     <input type="hidden" name="productPrice" value=""/>
                     <input type="hidden" name="productDescription" value=""/>
-                    <input type="submit" name="submit" value="Add to Cart" class="btn btn-success" id="add-to-cart"/>
+                    <input type="submit" name="submit" value="Order Now" class="btn btn-success" id="order-now"/>
                 </form>
           </div>
       </div>
@@ -105,7 +105,7 @@
 	var description = null;
 
     $('#upload').prop('disabled', true);
-    $('#add-to-cart').hide();
+    $('#order-now').hide();
 
     checkTab();
     setFormValue();
@@ -238,7 +238,7 @@
         });
 
         $(document).on("click", "#btnBorderSelect", function(e) {
-            $('#add-to-cart').show();
+            $('#order-now').show();
 			setFormValue();
         });
 
