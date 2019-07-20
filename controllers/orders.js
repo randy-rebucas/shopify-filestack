@@ -29,10 +29,11 @@ exports.getOrder = (req, res, next) => {
 }
 
 exports.updateOrder = (req, res, next) => {
+    //console.log(req.body);
     var orderData = {
         "order": {
             "email": req.body.contact_email,
-            "phone": req.body.contact_number,
+            "phone": req.body.full_phone,
             "customer": null,
             "shipping_address": {
                 "address1": req.body.shipping_address,
@@ -43,7 +44,7 @@ exports.updateOrder = (req, res, next) => {
                 "first_name": req.body.shipping_firstname,
                 "last_name": req.body.shipping_lastname,
                 "zip": req.body.shipping_postal_code,
-                "province": null,
+                "province": req.body.shipping_province,
                 "province_code": null,
                 "phone": null,
                 "latitude": null,
@@ -54,7 +55,8 @@ exports.updateOrder = (req, res, next) => {
             "processing_method": "manual",
             "source_name": "web",
             "tags": "custom-frames, frames",
-            "gateway": "shopify_payments"
+            "gateway": "shopify_payments",
+            "browser_ip": req.header('x-forwarded-for') || req.connection.remoteAddress,
         }
     }
 

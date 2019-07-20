@@ -10,6 +10,8 @@ var ordersRouter = require('./routes/orders');
 var themesRouter = require('./routes/themes');
 var successRouter = require('./routes/success');
 
+var ajaxRouter = require('./routes/ajax');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -39,6 +41,7 @@ app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
 app.use('/themes', themesRouter);
 app.use('/success', successRouter);
+app.use('/ajax', ajaxRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

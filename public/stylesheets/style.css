@@ -40,14 +40,17 @@ nav.navbar {
     color: #b1b1b1;
 }
 section table tbody tr:last-child td:first-child {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 400;
 }
 section table tbody tr:last-child td:last-child {
     font-size: 30px;
 }
 section table tbody tr:last-child td:last-child span {
     font-size: 16px;
+}
+.form-row {
+    margin-bottom: 15px;
 }
 /**/
 section#create-framed-product .container .row:last-child div {

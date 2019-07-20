@@ -159,6 +159,157 @@ $(document).ready(function() {
         setFormValue();
     });
 
+    // $.ajax({
+    //     url: '/ajax/countries',
+    //     type: 'GET',
+    //     dataType: 'json', // added data type
+    //     success: function(data) {
+    //         console.log(data);
+
+    //         $.each(data.countries, function(index, item) { // Iterates through a collection
+    //             $("#shipping_country").append( // Append an object to the inside of the select box
+    //                 $("<option></option>") // Yes you can do this.
+    //                     .text(item.name)
+    //                     .val(item.id)
+    //             );
+    //         });
+
+    //         populateProvinces($("#shipping_country option:first").val());
+    //     }
+    // });
+
+    // $('#shipping_country').change(function() {
+    //     populateProvinces($(this).val());
+    // });
+
+    // function populateProvinces(country_id) {
+    //     $.ajax({
+    //         url: '/ajax/provinces/'+country_id,
+    //         type: 'GET',
+    //         dataType: 'json', // added data type
+    //         success: function(data) {
+    //             console.log(data);
+    //             $("#shipping_province").empty();
+    //             $.each(data.provinces, function(index, item) { // Iterates through a collection
+    //                 $("#shipping_province").append( // Append an object to the inside of the select box
+    //                     $("<option></option>") // Yes you can do this.
+    //                         .text(item.name)
+    //                         .val(item.id)
+    //                 );
+    //             });
+    //         }
+    //     });
+    // }
+
+    $("#contact_number").intlTelInput({
+        autoPlaceholder: 'polite',
+        hiddenInput: "full_phone",
+        allowExtensions: true,
+        formatOnDisplay: true,
+        autoFormat: false,
+        autoHideDialCode: false,
+        defaultCountry: "auto",
+        nationalMode: true,
+        numberType: "MOBILE",
+        preventInvalidNumbers: true,
+        separateDialCode: true,
+        initialCountry: "auto",
+        utilsScript: "../javascripts/intl-tel-input-16.0.0/build/js/utils.js",
+        geoIpLookup: function(success, failure) {
+            $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                var countryCode = (resp && resp.country) ? resp.country : "";
+                success(countryCode);
+                console.log(resp);
+                console.log(resp.loc);
+                console.log(resp.city);
+                console.log(resp.region);
+                //console.log(resp.ip);
+            });
+        }
+    });
+    console.log($("#contact_number").intlTelInput("getNumber", 2));
+    $("#orderFrm").validate({
+        rules: {
+            contact_email: {
+                required: true,
+                email: true,
+                maxlength: 50
+            },
+            contact_number: {
+                required: true,
+                maxlength: 15
+            },
+            shipping_firstname: {
+                required: true,
+                maxlength: 50
+            },
+            shipping_lastname: {
+                required: true,
+                maxlength: 50
+            },
+            shipping_address: {
+                required: true,
+                maxlength: 300
+            },
+            shipping_city: {
+                required: true,
+                maxlength: 150
+            },
+            shipping_postal_code: {
+                required: true,
+                maxlength: 6
+            }
+        },
+        messages: {
+            contact_email: {
+                required: 'Email is reauired!',
+                email: 'Enter only valid email!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            },
+            contact_number: {
+                required: 'Phone number is reauired!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            },
+            shipping_firstname: {
+                required: 'Firstname is reauired!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            },
+            shipping_lastname: {
+                required: 'Lastname is reauired!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            },
+            shipping_address: {
+                required: 'Address is reauired!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            },
+            shipping_city: {
+                required: 'City is reauired!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            },
+            shipping_postal_code: {
+                required: 'Postal code is required!',
+                maxlength: jQuery.validator.format("Only {0} characters required!")
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'small',
+        errorClass: 'form-text text-danger',
+        errorPlacement: function(error, element) {
+            if (element.attr("name") == "contact_number") {
+                error.insertAfter(".iti");
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
 });
 
 function checkTab() {
