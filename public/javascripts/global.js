@@ -219,11 +219,12 @@ $(document).ready(function() {
             $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
                 var countryCode = (resp && resp.country) ? resp.country : "";
                 success(countryCode);
-                console.log(resp);
-                console.log(resp.loc);
-                console.log(resp.city);
-                console.log(resp.region);
-                //console.log(resp.ip);
+                var loc = resp.loc;
+                var arrLoc = loc.split(',');
+                $('#shipping_lat').val(arrLoc[0]);
+                $('#shipping_lon').val(arrLoc[1]);
+                $('#shipping_city').val(resp.city);
+                $('#shipping_province').val(resp.region);
             });
         }
     });

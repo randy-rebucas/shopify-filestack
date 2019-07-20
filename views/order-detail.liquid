@@ -6,6 +6,8 @@
                 <h2>{{page_title}}</h2>
                 <form method="post" action="/orders" id="orderFrm">
                     <input type="hidden" name="orderId" value="{{data.order.id}}"/>
+                    <input type="hidden" name="shipping_lat" value="" id="shipping_lat"/>
+                    <input type="hidden" name="shipping_lon" value="" id="shipping_lon"/>
                     <legend>Contact Information</legend>
                         <div class="form-group">
                             <input type="email" name="contact_email" class="form-control" id="contact_email" placeholder="Enter email">
@@ -36,7 +38,7 @@
                                 <input type="text" name="shipping_country" class="form-control" placeholder="Country">
                             </div>
                             <div class="col">
-                                <input type="text" name="shipping_province" class="form-control" placeholder="Province">
+                                <input type="text" name="shipping_province" class="form-control" placeholder="Province" id="shipping_province">
                             </div>
                             <div class="col">
                                 <input type="text" name="shipping_postal_code" class="form-control" placeholder="Postal code">

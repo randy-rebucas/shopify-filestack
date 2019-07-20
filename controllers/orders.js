@@ -45,10 +45,8 @@ exports.updateOrder = (req, res, next) => {
                 "last_name": req.body.shipping_lastname,
                 "zip": req.body.shipping_postal_code,
                 "province": req.body.shipping_province,
-                "province_code": null,
-                "phone": null,
-                "latitude": null,
-                "longitude": null
+                "latitude": req.body.shipping_lat,
+                "longitude": req.body.shipping_lon
             },
             "send_receipt": true,
             "send_fulfillment_receipt": true,
