@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary next-link upload-button" onclick="uploadImage()" id="upload">Upload Image</button>
+                            <button class="btn btn-primary next-link upload-button" id="onUpload">Upload Image</button>
                         </div>
                         <p>Framing does not get much easier than this. Follow these 4 easy steps and we will have the finished work back to you in two weeks.</p>
                     </div>
@@ -70,3 +70,17 @@
     </div>
   </div>
 </section>
+
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+    $(document).ready(function() {
+        filestactShopify.init({
+            forWardingAddress:   `{{urlProtocol}}://{{urlHost}}`,
+            filestackAPI: `{{filestackApi}}`
+        });
+
+        filestactShopify.readSettings();
+
+        filestactShopify.runProductForm();
+    });
+</script>
