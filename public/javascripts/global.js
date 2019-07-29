@@ -1,5 +1,12 @@
 // An object literal
 var filestactShopify = {
+    format : null,
+    size: null,
+    frame: null,
+    border: null,
+    price: 0,
+    description: null,
+
     myProperty: "hello",
 
     myMethod: function() {
@@ -140,6 +147,76 @@ var filestactShopify = {
         console.log(filestactShopify.settings);
     },
 
+    checkTab: function() {
+        $('.nav-fill .nav-item a').each(function() {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('disabled').removeAttr('tabindex aria-disabled');
+            } else {
+                $(this).addClass('disabled').attr({
+                    "tabindex": "-1",
+                    "aria-disabled": "true"
+                });
+            }
+        });
+    },
+
+    setFormValue: function () {
+        $("[name='variantFormat']").val(filestactShopify.getFormat());
+        $("[name='variantSize']").val(filestactShopify.getSize());
+        $("[name='variantFrame']").val(filestactShopify.getFrame());
+        $("[name='variantBorder']").val(filestactShopify.getBorder());
+        $("[name='productPrice']").val(filestactShopify.getPrice());
+        $("[name='productDescription']").val(filestactShopify.getDescription());
+    },
+
+    setFormat: function (formatValue) {
+        this.format = formatValue;
+    },
+
+    getFormat: function () {
+        return filestactShopify.format;
+    },
+
+    setSize: function (sizeValue) {
+        this.size = sizeValue;
+    },
+
+    getSize: function() {
+        return filestactShopify.size;
+    },
+
+    setFrame: function(frameValue) {
+        this.frame = frameValue;
+    },
+
+    getFrame: function() {
+        return filestactShopify.frame;
+    },
+
+    setBorder: function(borderValue) {
+        this.border = borderValue;
+    },
+
+    getBorder: function() {
+        return filestactShopify.border;
+    },
+
+    setPrice: function(priceValue) {
+        this.price = priceValue;
+    },
+
+    getPrice: function() {
+        return filestactShopify.price;
+    },
+
+    setDescription: function(descriptionValue) {
+        this.description = descriptionValue;
+    },
+
+    getDescription: function() {
+        return filestactShopify.description;
+    },
+
     runProductForm: function() {
         const formatOptions = {
             landscape: 16 / 10.5, //16:9
@@ -147,36 +224,29 @@ var filestactShopify = {
             square: 1 / 1 //1:1
         };
 
-        var format = null;
-        var size = null;
-        var frame = null;
-        var border = null;
-        var price = 0;
-        var description = null;
-
         $('#upload').prop('disabled', true);
         $('#order-now').hide();
 
-        checkTab();
-        setFormValue();
+        filestactShopify.checkTab();
+        filestactShopify.setFormValue();
 
         $('#variants li a').bind('click', function(event) {
             switch ($(this).text()) {
                 case 'Size':
-                    setSize(getSize());
+                    filestactShopify.setSize(filestactShopify.getSize());
                     frame = null;
                     border = null;
                     break;
                 case 'Frame':
-                    setFrame(getFrame());
+                    filestactShopify.setFrame(filestactShopify.getFrame());
                     border = null;
                     break;
                 case 'Border':
-                    setBorder(getBorder());
+                    filestactShopify.setBorder(filestactShopify.getBorder());
                     border = null;
                     break;
                 default:
-                    setFormat(getFormat());
+                    filestactShopify.setFormat(filestactShopify.getFormat());
                     size = null;
                     frame = null;
                     border = null;
@@ -189,25 +259,24 @@ var filestactShopify = {
                         .removeAttr('tabindex aria-disabled')
                         .tab('show');
 
-                    checkTab();
+                    filestactShopify.checkTab();
             }
 
-            populateStyles();
-            setFormValue();
+            filestactShopify.populateStyles();
+            filestactShopify.setFormValue();
         });
 
         $("input[name='aspect']").click(function() {
             var formatValue = $("input[name='aspect']:checked").val();
-            setFormat(formatValue);
+            filestactShopify.setFormat(formatValue);
             $('#upload').prop('disabled', false);
         });
 
         $(document).on("click", "input[name='dimensions']", function(e) {
             var sizeValue = $("input[name='dimensions']:checked").val();
-            console.log(sizeValue + ' sized checked!');
-            setSize(sizeValue);
-            setFormValue();
-            populateStyles();
+            filestactShopify.setSize(sizeValue);
+            filestactShopify.setFormValue();
+            filestactShopify.populateStyles();
         });
 
         $(document).on("click", "#btnSizeSelect", function(e) {
@@ -237,16 +306,16 @@ var filestactShopify = {
 
             $('#frame').empty().append(frameTemp);
 
-            setFrame('natural');
-            populateStyles();
+            filestactShopify.setFrame('natural');
+            filestactShopify.populateStyles();
         });
 
         $(document).on("click", "input[name='frame']", function(e) {
             var frameValue = $("input[name='frame']:checked").val();
             console.log(frameValue + ' frame checked!');
-            setFrame(frameValue);
-            setFormValue();
-            populateStyles();
+            filestactShopify.setFrame(frameValue);
+            filestactShopify.setFormValue();
+            filestactShopify.populateStyles();
         });
 
         $(document).on("click", "#btnFrameSelect", function(e) {
@@ -273,92 +342,21 @@ var filestactShopify = {
 
             $('#border').empty().append(borderTemp);
 
-            setBorder('Full Image');
-            populateStyles();
+            filestactShopify.setBorder('Full Image');
+            filestactShopify.populateStyles();
         });
 
         $(document).on("click", "input[name='border']", function(e) {
             var borderValue = $("input[name='border']:checked").val();
-            console.log(borderValue + ' border checked!');
-            setBorder(borderValue);
-            setFormValue();
-            populateStyles();
+            filestactShopify.setBorder(borderValue);
+            filestactShopify.setFormValue();
+            filestactShopify.populateStyles();
         });
 
         $(document).on("click", "#btnBorderSelect", function(e) {
             $('#order-now').show();
-            setFormValue();
+            filestactShopify.setFormValue();
         });
-
-        function checkTab() {
-            $('.nav-fill .nav-item a').each(function() {
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('disabled').removeAttr('tabindex aria-disabled');
-                } else {
-                    $(this).addClass('disabled').attr({
-                        "tabindex": "-1",
-                        "aria-disabled": "true"
-                    });
-                }
-            });
-        }
-
-        function setFormat(formatValue) {
-            format = formatValue;
-        }
-
-        function getFormat() {
-            return format;
-        }
-
-        function setSize(sizeValue) {
-            size = sizeValue;
-        }
-
-        function getSize() {
-            return size;
-        }
-
-        function setFrame(frameValue) {
-            frame = frameValue;
-        }
-
-        function getFrame() {
-            return frame;
-        }
-
-        function setBorder(borderValue) {
-            border = borderValue;
-        }
-
-        function getBorder() {
-            return border;
-        }
-
-        function setPrice(priceValue) {
-            price = priceValue;
-        }
-
-        function getPrice() {
-            return price;
-        }
-
-        function setDescription(descriptionValue) {
-            description = descriptionValue;
-        }
-
-        function getDescription() {
-            return description;
-        }
-
-        function setFormValue() {
-            $("[name='variantFormat']").val(getFormat());
-            $("[name='variantSize']").val(getSize());
-            $("[name='variantFrame']").val(getFrame());
-            $("[name='variantBorder']").val(getBorder());
-            $("[name='productPrice']").val(getPrice());
-            $("[name='productDescription']").val(getDescription());
-        }
 
         $(document).on("click", "#onUpload", function(e) {
             const client = filestack.init(filestactShopify.settings.filestackAPI);
@@ -367,7 +365,7 @@ var filestactShopify = {
                 uploadInBackground: false,
                 transformations: {
                     crop: {
-                        aspectRatio: formatOptions[getFormat()],
+                        aspectRatio: formatOptions[filestactShopify.getFormat()],
                         force: true
                     },
                     circle: false,
@@ -392,7 +390,7 @@ var filestactShopify = {
 
                     var dimensionTemp = '<legend>Choose your size...</legend>';
 
-                    var selectedFormat = getFormat();
+                    var selectedFormat = filestactShopify.getFormat();
                     switch (selectedFormat) {
                         case 'landscape':
                             dimensionTemp += '<div class="form-group">' +
@@ -413,7 +411,7 @@ var filestactShopify = {
                                 '<label class="form-check-label" for="dimensions-120x80cm">120x80cm</label>' +
                                 '</div>' +
                                 '</div>';
-                            setSize('40x30cm');
+                                filestactShopify.setSize('40x30cm');
                             break;
                         case 'portrait':
                             dimensionTemp += '<div class="form-group">' +
@@ -434,7 +432,7 @@ var filestactShopify = {
                                 '<label class="form-check-label" for="dimensions-80x120cm">80x120cm</label>' +
                                 '</div>' +
                                 '</div>';
-                            setSize('30x40cm');
+                                filestactShopify.setSize('30x40cm');
                             break;
                         default: //square
                             dimensionTemp += '<div class="form-group">' +
@@ -451,15 +449,15 @@ var filestactShopify = {
                                 '<label class="form-check-label" for="dimensions-90x90cm">90x90cm</label>' +
                                 '</div>' +
                                 '</div>';
-                            setSize('30x30cm');
+                                filestactShopify.setSize('30x30cm');
                     }
                     dimensionTemp += '<button id="btnSizeSelect" class="btn btn-primary">Select</button>';
                     dimensionTemp += '<p>Whether you are looking to make a big impact in your living room or create something smaller for your bedside table, these sizes should have it covered. </p>' +
                         '<p>Contact us for custom sizes.</p>';
                     $('#size').empty().append(dimensionTemp);
 
-                    setFormValue();
-                    populateStyles();
+                    filestactShopify.setFormValue();
+                    filestactShopify.populateStyles();
 
                     $('#variants li:nth-child(2) a')
                         .removeClass('disabled')
@@ -471,898 +469,899 @@ var filestactShopify = {
 
             client.picker(options).open();
         });
+    },
         /*
             @todo:
                 unset var value on switching
         */
 
-        function populateStyles() {
-            var wrapClass = null;
-            var wrapFrame = null;
-            /*
-            Load Format Aspects
-            landscape/portrait/square
-            */
-            switch (getFormat()) {
-                case 'landscape':
-                    /*Let's Check if there is any sizes seected*/
-                    if (getSize()) {
-                        /*
-                        Load Dimensions
-                        30x20cm/60x40cm/90x60cm/120x80
-                        */
-                        switch (getSize()) {
-                            case '40x30cm':
-                                wrapClass = 'mm300x200';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_300x200_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('110');
+    populateStyles: function() {
+        var wrapClass = null;
+        var wrapFrame = null;
+        /*
+        Load Format Aspects
+        landscape/portrait/square
+        */
+        switch (filestactShopify.getFormat()) {
+            case 'landscape':
+                /*Let's Check if there is any sizes seected*/
+                if (filestactShopify.getSize()) {
+                    /*
+                    Load Dimensions
+                    30x20cm/60x40cm/90x60cm/120x80
+                    */
+                    switch (filestactShopify.getSize()) {
+                        case '40x30cm':
+                            wrapClass = 'mm300x200';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_300x200_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('110');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm300x200';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_300x200_Black.png';
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm300x200';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_300x200_Black.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm300x200';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_300x200_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm300x200b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_300x200_Black_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm300x200';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_300x200_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm300x200b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_300x200_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm300x200';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_300x200_White.png';
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm300x200';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_300x200_White.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm300x200';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_300x200_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm300x200b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_300x200_White_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm300x200';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_300x200_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm300x200b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_300x200_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm300x200';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_300x200_Oak.png';
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm300x200';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_300x200_Oak.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm300x200';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_300x200_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm300x200b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_300x200_Oak_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm300x200';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_300x200_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm300x200b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_300x200_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                            case '60x40cm':
-                                wrapClass = 'mm600x400';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_600x400_Oak.png';
+                            }
+                            break;
+                        case '60x40cm':
+                            wrapClass = 'mm600x400';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_600x400_Oak.png';
 
-                                setDescription('Printed, framed & delivered');
-                                setPrice('180');
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('180');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm600x400';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_600x400_Black.png';
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm600x400';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_600x400_Black.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x400';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_600x400_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x400b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_600x400_Black_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x400';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_600x400_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x400b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_600x400_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm600x400';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_600x400_White.png';
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm600x400';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_600x400_White.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x400';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_600x400_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x400b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_600x400_White_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x400';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_600x400_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x400b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_600x400_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm600x400';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_600x400_Oak.png';
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm600x400';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_600x400_Oak.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x400';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_600x400_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x400b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_600x400_Oak_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x400';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_600x400_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x400b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_600x400_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                            case '100x66cm':
-                                wrapClass = 'mm900x600';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_900x600_Oak.png';
+                            }
+                            break;
+                        case '100x66cm':
+                            wrapClass = 'mm900x600';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_900x600_Oak.png';
 
-                                setDescription('Printed, framed & delivered');
-                                setPrice('290');
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('290');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm900x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_900x600_Black.png';
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm900x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_900x600_Black.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm900x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_900x600_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm900x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_900x600_Black_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm900x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_900x600_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm900x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_900x600_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm900x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_900x600_White.png';
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm900x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_900x600_White.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm900x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_900x600_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm900x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_900x600_White_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm900x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_900x600_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm900x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_900x600_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm900x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_900x600_Oak.png';
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm900x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_900x600_Oak.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm900x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_900x600_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm900x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_900x600_Oak_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm900x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_900x600_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm900x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_900x600_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                                /*Default: 120x80*/
-                            default:
-                                wrapClass = 'mm1200x800';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_1200x800_Oak.png';
+                            }
+                            break;
+                            /*Default: 120x80*/
+                        default:
+                            wrapClass = 'mm1200x800';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_1200x800_Oak.png';
 
-                                setDescription('Printed, framed & delivered');
-                                setPrice('550');
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('550');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm1200x800';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_1200x800_Black.png';
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm1200x800';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_1200x800_Black.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm1200x800';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_1200x800_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm1200x800b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_1200x800_Black_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm1200x800';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Frame_1200x800_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm1200x800b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Black/Border/Frame_1200x800_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm1200x800';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_1200x800_White.png';
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm1200x800';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_1200x800_White.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm1200x800';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_1200x800_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm1200x800b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_1200x800_White_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm1200x800';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Frame_1200x800_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm1200x800b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/White/Border/Frame_1200x800_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm1200x800';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_1200x800_Oak.png';
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm1200x800';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_1200x800_Oak.png';
 
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm1200x800';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_1200x800_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm1200x800b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_1200x800_Oak_B.png';
-                                                }
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm1200x800';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Frame_1200x800_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm1200x800b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/landscape/Oak/Border/Frame_1200x800_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                        }
+                            }
                     }
-                    break;
-                case 'portrait':
-                    /*Let's Check if there is any sizes seected*/
-                    if (getSize()) {
-                        /*
-                        Load Dimensions
-                        20x30cm/40x60cm/60x90cm/80x120
-                        */
-                        switch (getSize()) {
-                            case '30x40cm':
-                                wrapClass = 'mm200x300';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_200x300_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('110');
+                }
+                break;
+            case 'portrait':
+                /*Let's Check if there is any sizes seected*/
+                if (filestactShopify.getSize()) {
+                    /*
+                    Load Dimensions
+                    20x30cm/40x60cm/60x90cm/80x120
+                    */
+                    switch (filestactShopify.getSize()) {
+                        case '30x40cm':
+                            wrapClass = 'mm200x300';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_200x300_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('110');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm200x300';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_200x300_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm200x300';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_200x300_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm200x300b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_200x300_Black_B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm200x300';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_200x300_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm200x300';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_200x300_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm200x300b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_200x300_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm200x300';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_200x300_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm200x300';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_200x300_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm200x300b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_200x300_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm200x300';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_200x300_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm200x300';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_200x300_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm200x300b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_200x300_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm200x300';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_200x300_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm200x300';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_200x300_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm200x300b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_200x300_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm200x300';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_200x300_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm200x300';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_200x300_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm200x300b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_200x300_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                            case '40x60cm':
-                                wrapClass = 'mm400x600';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_400x600_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('180');
+                            }
+                            break;
+                        case '40x60cm':
+                            wrapClass = 'mm400x600';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_400x600_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('180');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm400x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_400x600_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm400x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_400x600_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm400x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_400x600_Black_B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm400x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_400x600_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm400x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_400x600_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm400x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_400x600_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm400x600';
-                                            wrapFrame = forWardingAddress + '/images/portrait/White/Frame_400x600_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm400x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_400x600_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm400x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_400x600_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm400x600';
+                                        wrapFrame = forWardingAddress + '/images/portrait/White/Frame_400x600_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm400x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_400x600_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm400x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_400x600_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm400x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_400x600_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm400x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_400x600_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm400x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_400x600_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm400x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_400x600_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm400x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_400x600_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm400x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_400x600_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                            case '66x100cm':
-                                wrapClass = 'mm600x900';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_600x900_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('290');
+                            }
+                            break;
+                        case '66x100cm':
+                            wrapClass = 'mm600x900';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_600x900_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('290');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm600x900';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_600x900_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x900';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_600x900_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x900b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_600x900_Black_B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm600x900';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_600x900_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x900';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_600x900_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x900b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_600x900_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm600x900';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_600x900_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x900';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_600x900_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x900b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_600x900_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm600x900';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_600x900_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x900';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_600x900_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x900b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_600x900_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm600x900';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_600x900_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x900';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_600x900_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x900b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_600x900_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm600x900';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_600x900_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x900';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_600x900_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x900b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_600x900_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                                /*Default: 80x120*/
-                            default:
-                                wrapClass = 'mm800x1200';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_800x1200_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('550');
+                            }
+                            break;
+                            /*Default: 80x120*/
+                        default:
+                            wrapClass = 'mm800x1200';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_800x1200_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('550');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm800x1200';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_800x1200_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm800x1200';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_800x1200_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm800x1200b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_800x1200_Black _B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm800x1200';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_800x1200_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm800x1200';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Frame_800x1200_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm800x1200b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Black/Border/Frame_800x1200_Black _B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm800x1200';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_800x1200_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm800x1200';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_800x1200_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm800x1200b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_800x1200_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm800x1200';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_800x1200_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm800x1200';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Frame_800x1200_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm800x1200b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/White/Border/Frame_800x1200_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm800x1200';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_800x1200_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm800x1200';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_800x1200_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm800x1200b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_800x1200_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm800x1200';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_800x1200_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm800x1200';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Frame_800x1200_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm800x1200b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/portrait/Oak/Border/Frame_800x1200_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                        }
+                            }
                     }
-                    break;
-                    /*Default: square*/
-                default:
-                    /*Let's Check if there is any sizes seected*/
-                    if (getSize()) {
-                        /*
-                        Load Dimensions
-                        60x60cm/90x90cm/30x30cm
-                        */
-                        switch (getSize()) {
-                            case '30x30cm':
-                                wrapClass = 'mm300x300';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_300x300_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('110');
+                }
+                break;
+                /*Default: square*/
+            default:
+                /*Let's Check if there is any sizes seected*/
+                if (filestactShopify.getSize()) {
+                    /*
+                    Load Dimensions
+                    60x60cm/90x90cm/30x30cm
+                    */
+                    switch (filestactShopify.getSize()) {
+                        case '30x30cm':
+                            wrapClass = 'mm300x300';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_300x300_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('110');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm300x300';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_300x300_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm300x300';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_300x300_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm300x300b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Border/Frame_300x300_Black_B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm300x300';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_300x300_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm300x300';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_300x300_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm300x300b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Border/Frame_300x300_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm300x300';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_300x300_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm300x300';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_300x300_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm300x300b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Border/Frame_300x300_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm300x300';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_300x300_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm300x300';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_300x300_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm300x300b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Border/Frame_300x300_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm300x300';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_300x300_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm300x300';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_300x300_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm300x300b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Border/Frame_300x300_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm300x300';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_300x300_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm300x300';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_300x300_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm300x300b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Border/Frame_300x300_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                            case '90x90cm':
-                                wrapClass = 'mm900x900';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_900x900_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('290');
+                            }
+                            break;
+                        case '90x90cm':
+                            wrapClass = 'mm900x900';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_900x900_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('290');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm900x900';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_900x900_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm900x900';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_900x900_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm900x900b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Border/Frame_900x900_Black_B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm900x900';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_900x900_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm900x900';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_900x900_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm900x900b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Border/Frame_900x900_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm900x900';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_900x900_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm900x900';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_900x900_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm900x900b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Border/Frame_900x900_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm900x900';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_900x900_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm900x900';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_900x900_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm900x900b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Border/Frame_900x900_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm900x900';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_900x900_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm900x900';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_900x900_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm900x900b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Black/Frame_900x900_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm900x900';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_900x900_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm900x900';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_900x900_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm900x900b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Black/Frame_900x900_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                                break;
-                                /*Default: 60x60cm*/
-                            default:
-                                wrapClass = 'mm600x600';
-                                wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_600x600_Oak.png';
-                                setDescription('Printed, framed & delivered');
-                                setPrice('180');
+                            }
+                            break;
+                            /*Default: 60x60cm*/
+                        default:
+                            wrapClass = 'mm600x600';
+                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_600x600_Oak.png';
+                            filestactShopify.setDescription('Printed, framed & delivered');
+                            filestactShopify.setPrice('180');
 
-                                if (getFrame()) {
-                                    /*
-                                    Load Frame Color
-                                    black/white/natural
-                                    */
-                                    switch (getFrame()) {
-                                        case 'black':
-                                            wrapClass = 'zoomed mm600x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_600x600_Black.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_600x600_Black.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Border/Frame_600x600_Black_B.png';
-                                                }
+                            if (filestactShopify.getFrame()) {
+                                /*
+                                Load Frame Color
+                                black/white/natural
+                                */
+                                switch (filestactShopify.getFrame()) {
+                                    case 'black':
+                                        wrapClass = 'zoomed mm600x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_600x600_Black.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Frame_600x600_Black.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Black/Border/Frame_600x600_Black_B.png';
                                             }
-                                            break;
-                                        case 'white':
-                                            wrapClass = 'zoomed mm600x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_600x600_White.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_600x600_White.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Border/Frame_600x600_White_B.png';
-                                                }
+                                        }
+                                        break;
+                                    case 'white':
+                                        wrapClass = 'zoomed mm600x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_600x600_White.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Frame_600x600_White.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/White/Border/Frame_600x600_White_B.png';
                                             }
-                                            break;
-                                            /*Default: Natural*/
-                                        default:
-                                            wrapClass = 'zoomed mm600x600';
-                                            wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_600x600_Oak.png';
-                                            if (getBorder()) {
-                                                /*
-                                                Load Border Style
-                                                Full Image/White Border
-                                                */
-                                                switch (getBorder()) {
-                                                    case 'Full Image':
-                                                        wrapClass = 'zoomed mm600x600';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_600x600_Oak.png';
-                                                        break;
-                                                        /*Default: White Border*/
-                                                    default:
-                                                        wrapClass = 'zoomed mm600x600b';
-                                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Border/Frame_600x600_Oak_B.png';
-                                                }
+                                        }
+                                        break;
+                                        /*Default: Natural*/
+                                    default:
+                                        wrapClass = 'zoomed mm600x600';
+                                        wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_600x600_Oak.png';
+                                        if (filestactShopify.getBorder()) {
+                                            /*
+                                            Load Border Style
+                                            Full Image/White Border
+                                            */
+                                            switch (filestactShopify.getBorder()) {
+                                                case 'Full Image':
+                                                    wrapClass = 'zoomed mm600x600';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Frame_600x600_Oak.png';
+                                                    break;
+                                                    /*Default: White Border*/
+                                                default:
+                                                    wrapClass = 'zoomed mm600x600b';
+                                                    wrapFrame = filestactShopify.settings.forWardingAddress + '/images/square/Oak/Border/Frame_600x600_Oak_B.png';
                                             }
-                                    }
+                                        }
                                 }
-                        }
+                            }
                     }
-            }
-
-            $('.preview').removeClass('zoomed mm300x200 mm600x400 mm900x600 mm1200x800 mm200x300 mm400x600 mm600x900 mm800x1200 mm300x300 mm600x600 mm900x900 mm300x300b mm200x300b mm300x200b mm300x200b mm600x400b mm900x600b mm1200x800b mm200x300b mm400x600b mm600x900b mm800x1200b mm900x900b mm600x600b').addClass(wrapClass);
-
-            $('.frame-image').remove();
-            $('<img class="frame-image" src="' + wrapFrame + '"/>').appendTo('.preview');
+                }
         }
+
+        $('.preview').removeClass('zoomed mm300x200 mm600x400 mm900x600 mm1200x800 mm200x300 mm400x600 mm600x900 mm800x1200 mm300x300 mm600x600 mm900x900 mm300x300b mm200x300b mm300x200b mm300x200b mm600x400b mm900x600b mm1200x800b mm200x300b mm400x600b mm600x900b mm800x1200b mm900x900b mm600x600b').addClass(wrapClass);
+
+        $('.frame-image').remove();
+        $('<img class="frame-image" src="' + wrapFrame + '"/>').appendTo('.preview');
     }
+
 };

@@ -102,13 +102,16 @@ exports.createProduct = (req, res, next) => {
             //set varient data to update product varient
             var varient_data = {
                 "variant": {
-                    "id": data.product.id, //product id
-                    "image_id": data.product.image.id //product source image id
+                    "id": data.product.id,
+                    "image_id": data.product.image.id
                 }
             }
             var varId = item.id + '.json';
             req.shopifyToken.put('/admin/api/2019-04/variants/' + varId, varient_data, function(err, data, headers) {
-                if (err) {
+
+                res.redirect('https://'+req.shopifyToken.config.shop+'.myshopify.com/cart/add?id='+item.id+'&quantity=1');
+
+                /*if (err) {
                     res.sendStatus(err.status || 500);
                     res.render('error');
                 }
@@ -135,7 +138,7 @@ exports.createProduct = (req, res, next) => {
                     }
                     res.redirect('orders/' + response.order.id);
 
-                });
+                });*/
             });
         });
     });
