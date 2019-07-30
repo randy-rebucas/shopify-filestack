@@ -10,10 +10,17 @@ exports.getFilestackAssets = (req, res, next) => {
             if(Object.keys(snipetData).length) {
                 var snippetKey = true;
             }
-            res.render('index', {
-                title: 'Filestack Shopify API',
-                filastackApi: configKey,
-                snippetFile: snippetKey,
+            req.shopifyToken.get('/admin/api/2019-07/themes/'+req.themeId+'/assets.json', function(err, assetData, headers) {
+                console.log(req.shopifyToken.config.shop);
+                res.render('index', {
+                    title: 'Filestack Shopify API',
+                    filastackApi: configKey,
+                    snippetFile: snippetKey,
+                    assetList: assetData,
+                    configSettings: req.configSettingsData,
+                    configSchema: req.configSettingsSchema,
+                    storeName: req.shopifyToken.config.shop
+                });
             });
         });
     });

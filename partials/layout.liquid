@@ -7,60 +7,76 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel='stylesheet' href='/stylesheets/style.css' />
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  
   <title>{{title}}</title>
 
   <meta name="description" content="Shopify Filestack API">
   <meta name="author" content="Randy Rebucas">
   <meta name="email" content="rebucasrandy1986@gmail.com">
 
-  <link rel="stylesheet" href="/javascripts/intl-tel-input-16.0.0/build/css/intlTelInput.min.css">
-
-  <style>
-    .material-icons {
-      font-family: 'Material Icons';
-      font-weight: normal;
-      font-style: normal;
-      display: inline-block;
-      line-height: 1;
-      text-transform: none;
-      letter-spacing: normal;
-      word-wrap: normal;
-      white-space: nowrap;
-      direction: ltr;
-
-      /* Support for all WebKit browsers. */
-      -webkit-font-smoothing: antialiased;
-      /* Support for Safari and Chrome. */
-      text-rendering: optimizeLegibility;
-
-      /* Support for Firefox. */
-      -moz-osx-font-smoothing: grayscale;
-
-      /* Support for IE. */
-      font-feature-settings: 'liga';
-    }
-    .md-18 {
-      font-size: 18px;
-    }
-    .md-24 {
-      font-size: 24px;
-    }
-  </style>
-
+  {% for asset in assetList.assets %}
+      {% if asset.key == 'assets/lazysizes.js' or asset.key == 'assets/vendor.js' or asset.key == 'assets/theme.js'%}
+          <script src="{{ asset.public_url }}" type="text/javascript"></script>
+      {% endif %}
+      {% if asset.key == 'assets/theme.scss'%}
+          <link href="{{ asset.public_url }}" rel="stylesheet" type="text/css" media="all">
+      {% endif %}
+  {% endfor %}
+  <link href="https://cdn.shopify.com/s/files/1/0105/1328/5182/t/1/assets/theme.scss.css?1077" rel="stylesheet" type="text/css" media="all">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
   <script src="/javascripts/global.js"></script>
+  {% comment %} and 
+
+  {% endcomment %}
+  <style>
+    .site-nav {
+        margin: 25px 0 0;
+    }
+  	.site-nav a {
+        padding: 3px 10px;
+        font-family: monospace;
+        color: #555;
+        font-size: 16px;
+    }
+    .site-nav__label {
+        border-bottom: none;
+    }
+    .site-nav__link:not([disabled]):hover .site-nav__label {
+        border-bottom-color: transparent;
+    }
+   .site-nav a:hover {
+        text-decoration: none;
+    }
+    a.site-header__icon.site-header__cart {
+        color: #3d4042;
+      display:none;
+    }
+    .grid.grid--no-gutters.grid--table.site-header__mobile-nav > div:last-child {
+      display: none;
+  }
+  </style>
 </head>
-<body>
+<body class="template-index">
+  {% block header %}{% endblock %}
 
-  {% block %}{% endblock %}
+  <div class="page-container" id="PageContainer">
 
-  <!--<footer> {% block footer %}{% endblock %} </footer>-->
+    <main class="main-content js-focus-hidden" id="MainContent" role="main" tabindex="-1">
+      {% block %}{% endblock %}
+    </main>
 
+    {% block footer %}{% endblock %}
+
+  </div>
+  {% comment %}
+  {% assign settings = configSettings.current %}
+  {{settings.color_text}}
+  {% endcomment %}
 </body>
 </html>

@@ -1,9 +1,4 @@
-body {
-    background: #e2e2e2;
-}
-section {
-    padding: 2em;
-}
+
 .media {
     margin-bottom: 1em;
 }
@@ -13,9 +8,6 @@ li.media img {
 .hide {
     display: none;
 }
-.table {
-    background: lightgrey;
-}
 .card-header span {
     float: right;
     visibility: hidden;
@@ -24,34 +16,41 @@ li.media img {
 .card-header:hover span {
     visibility: visible;
 }
-footer {
-    position: fixed;
-    bottom: 0;
-    text-align: center;
-    width: 100%;
-    padding: 1em 0;
-    background: #efefef;
-    color: #555;
-}
 nav.navbar {
     margin-bottom: 2em;
 }
 .nav-fill .nav-item a:not(.active) {
     color: #b1b1b1;
 }
-section table tbody tr:last-child td:first-child {
-    font-size: 14px;
-    font-weight: 400;
-}
-section table tbody tr:last-child td:last-child {
-    font-size: 30px;
-}
-section table tbody tr:last-child td:last-child span {
-    font-size: 16px;
-}
+
 .form-row {
     margin-bottom: 15px;
 }
+    .site-nav {
+        margin: 25px 0 0;
+    }
+  	.site-nav a {
+        padding: 3px 10px;
+        font-family: monospace;
+        color: #555;
+        font-size: 16px;
+    }
+    .site-nav__label {
+        border-bottom: none;
+    }
+    .site-nav__link:not([disabled]):hover .site-nav__label {
+        border-bottom-color: transparent;
+    }
+   .site-nav a:hover {
+        text-decoration: none;
+    }
+    a.site-header__icon.site-header__cart {
+        color: #3d4042;
+      display:none;
+    }
+    .grid.grid--no-gutters.grid--table.site-header__mobile-nav > div:last-child {
+      display: none;
+  }
 /**/
 section#create-framed-product .container .row:last-child div {
     position: relative;
@@ -64,6 +63,7 @@ section#create-framed-product .container .row:last-child {
     height: 680px;
     position: relative;
 }
+
 .preview {
     position: absolute;
     left: calc((600 - 600) / 2 / 670 * 100%);
@@ -81,7 +81,7 @@ section#create-framed-product .container .row:last-child {
     max-width: 100%;
     max-height: 100%;
     transition: opacity 0.5s;
-    -webkit-backface-visibility: hidden;
+    /*-webkit-backface-visibility: hidden;*/
 }
 /*sizes*/
 /*Square*/
@@ -194,3 +194,33 @@ borders
     max-width: 56%;
     width: 100%;
 }
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+  .md-18 {
+    font-size: 18px;
+  }
+  .md-24 {
+    font-size: 24px;
+  }

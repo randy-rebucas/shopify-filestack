@@ -1,4 +1,7 @@
 {% layout 'layout' %}
+{% block 'header' %}
+    {% include './public/resources/header.liquid' %}
+{% endblock %}
 <section>
     <div class="container">
         <div class="row">
@@ -69,11 +72,5 @@
     });
 </script>
 {% block 'footer' %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                Copyright @ 2019, sixt4
-            </div>
-        </div>
-    </div>
+    {% include './public/resources/footer.liquid' %}
 {% endblock %}

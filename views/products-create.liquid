@@ -1,4 +1,7 @@
 {% layout 'layout' %}
+{% block 'header' %}
+    {% include './public/resources/header.liquid' %}
+{% endblock %}
 <section id="create-framed-product">
   <div class="container">
       <div class="row">
@@ -70,7 +73,9 @@
     </div>
   </div>
 </section>
-
+{% block 'footer' %}
+    {% include './public/resources/footer.liquid' %}
+{% endblock %}
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script>
     $(document).ready(function() {

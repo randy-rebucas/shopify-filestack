@@ -29,7 +29,8 @@ exports.createForm = (req, res, next) => {
         title: 'Create Products',
         urlHost: req.get('host'),
         urlProtocol: req.protocol,
-        filestackApi: req.filestackApi
+        filestackApi: req.filestackApi,
+        storeName: req.shopifyToken.config.shop
     });
 }
 
